@@ -142,3 +142,4 @@ cython_debug/
 
 # script
 script
+test.py
