@@ -1,12 +1,16 @@
 import json
 import re
 import mysql.connector
+from dotenv import load_dotenv
 
+load_dotenv()
+
+password = os.getenv("PASSWORD")
 
 mydb = mysql.connector.connect(
   host="localhost",
   user="root",
-  password="123456",
+  password=password,
   database="taipei_day_trip"
 )
 mycursor = mydb.cursor()
