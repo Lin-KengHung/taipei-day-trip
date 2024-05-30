@@ -72,10 +72,9 @@ async def get_mrts_list():
     mycursor = connect.cursor(dictionary=True)
 
     # get all mrts 
-    mycursor.execute("SELECT mrt FROM attraction")
+    mycursor.execute("SELECT mrt FROM attraction WHERE mrt IS NOT NULL GROUP BY mrt ORDER BY count(*) DESC")
     raw_mrt_list = mycursor.fetchall()
-
-    mrt_list = sort_mrt(raw_mrt_list)
+    mrt_list = list(map(lambda x: x["mrt"], raw_mrt_list))
     mycursor.close()
     connect.close()
     return {"data" : mrt_list}
@@ -94,15 +93,3 @@ def make_Attraction_schema(attraction_list, image_list) -> List[Attraction]:
         attraction["images"] = id2image_list[attraction["id"]]
         data_list.append(Attraction(**attraction))
     return data_list
-    
-def sort_mrt(raw_mrt_list) -> List:
-     # mrt = [{'mrt': '新北投'}, {'mrt': '雙連'}, {'mrt': '士林'} , ..., ]
-    mrt2count = {}
-    for mrt in raw_mrt_list:
-        if mrt["mrt"] is None:
-            next
-        elif mrt["mrt"] not in mrt2count:
-            mrt2count[mrt["mrt"]] = 1 
-        else:
-            mrt2count[mrt["mrt"]] += 1
-    return sorted(mrt2count, key=mrt2count.get, reverse=True)
