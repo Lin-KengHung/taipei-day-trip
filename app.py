@@ -1,7 +1,8 @@
 from fastapi import *
-from fastapi.responses import FileResponse
+from fastapi.responses import FileResponse, JSONResponse
 from router import attraction
 from pydantic import BaseModel
+from router import Error
 
 app = FastAPI(
 	title="APIs for Taipei Day Trip",
@@ -10,6 +11,16 @@ app = FastAPI(
 )
 
 app.include_router(attraction.router)
+
+@app.middleware("http")
+async def ServerError(request: Request, call_next):
+	try:
+		response = await call_next(request)
+		return response
+	except:
+		return JSONResponse(status_code=500,content=Error(message="伺服器內部錯誤"))
+
+
 
 # Static Pages (Never Modify Code in this Block)
 @app.get("/", include_in_schema=False)

@@ -1,7 +1,8 @@
 from fastapi import *
-from pydantic import BaseModel
-from typing import List, Optional, Union
-from . import connection_pool
+from pydantic import BaseModel, Field
+from typing import List, Optional, Union, Dict
+from . import connection_pool, Error
+from fastapi.responses import JSONResponse
 
 
 
@@ -22,8 +23,14 @@ class Attraction(BaseModel):
 	lng: float
 	images: List[str]
 class AttractionOut(BaseModel):
-     nextPage: int | None = None
+     nextPage: Optional[int] = Field(None, gt=0)
      data: Union[List[Attraction],Attraction]
+
+class DataOut(BaseModel):
+    data: Union[list, dict] 
+
+    
+
 
 @router.get("/attractions", response_model=AttractionOut , summary="取得景點資料列表", description="取得不同分頁的旅遊景點列表資料，也可以根據標題關鍵字、或捷運站名稱篩選", tags=["Attraction"])
 async def get_attraction_data_list(page: int = Query(..., ge=0, description="要取得的分頁，每頁 12 筆資料"), keyword: str  =  Query(default="", description="用來完全比對捷運站名稱、或模糊比對景點名稱的關鍵字，沒有給定則不做篩選")):
@@ -49,7 +56,7 @@ async def get_attraction_data_list(page: int = Query(..., ge=0, description="要
     return response
 
 
-@router.get("/attractions/{attractionId}", summary="根據景點編號取得景點資料", tags=["Attraction"])
+@router.get("/attraction/{attractionId}", summary="根據景點編號取得景點資料", tags=["Attraction"], response_model=DataOut, responses={400:{"model":Error}})
 async def get_attraction_data_by_id(attractionId: int) :
     connect = connection_pool.get_connection()
     mycursor = connect.cursor(dictionary=True)
@@ -57,16 +64,20 @@ async def get_attraction_data_by_id(attractionId: int) :
     # get attraction data
     mycursor.execute("SELECT * FROM attraction WHERE id = %s", (attractionId,))
     attractions_list = mycursor.fetchall()
+    if not attractions_list:
+        return JSONResponse(status_code=400, content=Error(message="景點編號不正確").model_dump())
+
     # get image url of needed attractions
     mycursor.execute("SELECT a.id, i.url FROM (SELECT id FROM attraction WHERE id = %s) AS a JOIN image AS i ON a.id = i.attraction_id", (attractionId,))
     images_list = mycursor.fetchall()
-    
-    response = make_Attraction_schema(attractions_list, images_list)[0]
+    attraction_dict = dict(make_Attraction_schema(attractions_list, images_list)[0])
+    response = DataOut(data=attraction_dict)
+
     mycursor.close()
     connect.close()
-    return {"data":response}
+    return response
 
-@router.get("/mrts", summary="取得捷運站名稱列表", description="取得所有捷運站名稱列表，按照週邊景點的數量由大到小排序", tags=["MRT Station"])
+@router.get("/mrts", summary="取得捷運站名稱列表", description="取得所有捷運站名稱列表，按照週邊景點的數量由大到小排序", tags=["MRT Station"], response_model=DataOut)
 async def get_mrts_list():
     connect = connection_pool.get_connection()
     mycursor = connect.cursor(dictionary=True)
@@ -74,10 +85,12 @@ async def get_mrts_list():
     # get all mrts 
     mycursor.execute("SELECT mrt FROM attraction WHERE mrt IS NOT NULL GROUP BY mrt ORDER BY count(*) DESC")
     raw_mrt_list = mycursor.fetchall()
+
     mrt_list = list(map(lambda x: x["mrt"], raw_mrt_list))
+    response = DataOut(data=mrt_list)
     mycursor.close()
     connect.close()
-    return {"data" : mrt_list}
+    return response
 
 def make_Attraction_schema(attraction_list, image_list) -> List[Attraction]:
      # image list vertical integrate
