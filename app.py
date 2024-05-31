@@ -18,7 +18,7 @@ async def ServerError(request: Request, call_next):
 		response = await call_next(request)
 		return response
 	except:
-		return JSONResponse(status_code=500,content=Error(message="伺服器內部錯誤"))
+		return JSONResponse(status_code=500,content=Error(message="伺服器內部錯誤").model_dump())
 
 
 
