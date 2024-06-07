@@ -12,11 +12,14 @@ const option = {
   rootMargin: "0px 0px 0px 0px",
   threshold: 0.0,
 };
-const callback = (entries) => {
+async function callback(entries) {
   if (entries[0].isIntersecting && nextPage != null) {
-    renderAttraction(nextPage, keyword);
+    observer.unobserve(entries[0].target);
+    await renderAttraction(nextPage, keyword);
+    observer.observe(entries[0].target);
   }
-};
+}
+
 const observer = new IntersectionObserver(callback, option);
 let footer = document.querySelector("footer");
 observer.observe(footer);
@@ -65,6 +68,7 @@ async function renderAttraction(page = 0, keyword = "") {
       data.data[i].category
     );
   }
+  console.log("渲染完畢");
 }
 
 async function renderMrts() {
