@@ -14,13 +14,9 @@ const option = {
 };
 async function callback(entries) {
   if (entries[0].isIntersecting && nextPage != null) {
-    console.log("進入callback");
     observer.unobserve(entries[0].target);
-    console.log("放棄觀察");
     await renderAttraction(nextPage, keyword);
-    console.log("渲染完畢");
     observer.observe(entries[0].target);
-    console.log("重新觀察");
   }
 }
 
