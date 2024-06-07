@@ -2,7 +2,7 @@ from fastapi import *
 from fastapi.responses import FileResponse, JSONResponse
 from router import attraction, user
 from pydantic import BaseModel
-from router import Error
+from router import Error, CustomizeRaise
 from fastapi.staticfiles import StaticFiles
 
 app = FastAPI(
@@ -25,6 +25,10 @@ app.mount("/static", StaticFiles(directory="static"), name="static")
 # 		return JSONResponse(status_code=500,content=Error(message="伺服器內部錯誤").model_dump())
 
 
+@app.exception_handler(CustomizeRaise)
+async def error_raise(requset: Request, exc: CustomizeRaise):
+	return JSONResponse(status_code=exc.status_code, content=Error(message=exc.message).model_dump())
+
 
 # Static Pages (Never Modify Code in this Block)
 @app.get("/", include_in_schema=False)
@@ -39,3 +43,6 @@ async def booking(request: Request):
 @app.get("/thankyou", include_in_schema=False)
 async def thankyou(request: Request):
 	return FileResponse("./static/thankyou.html", media_type="text/html")
+
+
+
