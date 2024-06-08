@@ -26,7 +26,7 @@ observer.observe(footer);
 
 // --------------------keyword search--------------------
 
-let searchBtn = document.querySelector("button.search");
+let searchBtn = document.querySelector("button.keyword-search");
 searchBtn.addEventListener("click", (e) => {
   keyword = document.querySelector("input#attraction").value;
   attractionSection.innerHTML = "";
@@ -34,7 +34,7 @@ searchBtn.addEventListener("click", (e) => {
 });
 
 // --------------------mrt horizontal scroll bar--------------------
-let mrtContainer = document.querySelector("div.mrt-container");
+let mrtContainer = document.querySelector("div.mrt-bar__container");
 let rightBtn = document.querySelector("img.right-arrow");
 let leftBtn = document.querySelector("img.left-arrow");
 rightBtn.addEventListener("click", (e) => {
@@ -74,7 +74,7 @@ async function renderMrts() {
   url = "/api/mrts";
   let response = await fetch(url, { method: "GET" });
   let data = await response.json();
-  let mrtsContainer = document.querySelector("div.mrt-container");
+  let mrtsContainer = document.querySelector("div.mrt-bar__container");
 
   for (let i = 0; i < data.data.length; i++) {
     let mrt = `<div class="mrt body-med">${data.data[i]}</div>`;
@@ -83,13 +83,13 @@ async function renderMrts() {
 }
 
 function addAttractionBoxes(imgURL, name, mrt, cat) {
-  let box = `<div class="box-outer">
-        <div class="box">
-            <div class="img-container">
+  let box = `<div class="attraction__box--outer">
+        <div class="attraction__box">
+            <div class="attraction__img">
                 <img src="${imgURL}" alt="景點圖片" />
             </div>
-        <div class="attraction-name body-bold">${name}</div>
-        <div class="attraction-info">
+        <div class="attraction__name body-bold">${name}</div>
+        <div class="attraction__info">
             <div class="attraction-mrt">${mrt}</div>
             <div class="attraction-cat">${cat}</div>
         </div>
