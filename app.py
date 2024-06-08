@@ -1,8 +1,9 @@
 from fastapi import *
 from fastapi.responses import FileResponse, JSONResponse
-from router import attraction
+from router import attraction, user
 from pydantic import BaseModel
-from router import Error
+from router import Error, CustomizeRaise
+from fastapi.staticfiles import StaticFiles
 
 app = FastAPI(
 	title="APIs for Taipei Day Trip",
@@ -11,15 +12,22 @@ app = FastAPI(
 )
 
 app.include_router(attraction.router)
+app.include_router(user.router)
+app.mount("/static", StaticFiles(directory="static"), name="static")
 
-@app.middleware("http")
-async def ServerError(request: Request, call_next):
-	try:
-		response = await call_next(request)
-		return response
-	except:
-		return JSONResponse(status_code=500,content=Error(message="伺服器內部錯誤").model_dump())
+# @app.middleware("http")
+# async def ServerError(request: Request, call_next):
+# 	try:
+# 		response = await call_next(request)
+# 		return response
+# 	except Exception as e:
+# 		print(e)
+# 		return JSONResponse(status_code=500,content=Error(message="伺服器內部錯誤").model_dump())
 
+
+@app.exception_handler(CustomizeRaise)
+async def error_raise(requset: Request, exc: CustomizeRaise):
+	return JSONResponse(status_code=exc.status_code, content=Error(message=exc.message).model_dump())
 
 
 # Static Pages (Never Modify Code in this Block)
@@ -35,3 +43,6 @@ async def booking(request: Request):
 @app.get("/thankyou", include_in_schema=False)
 async def thankyou(request: Request):
 	return FileResponse("./static/thankyou.html", media_type="text/html")
+
+
+

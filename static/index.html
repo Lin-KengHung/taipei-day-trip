@@ -1,11 +1,126 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Index</title>
-</head>
-<body>
-  
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Index</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100..900&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/static/css/overall.css" />
+    <link rel="stylesheet" href="/static/css/index.css" />
+    <script defer src="/static/app/index.js"></script>
+  </head>
+  <body>
+    <header class="header">
+      <nav class="header__nav">
+        <h2 class="header__title">台北一日遊</h2>
+        <div class="header__page">
+          <button class="header__btn">預定行程</button>
+          <button class="header__btn">登入/註冊</button>
+        </div>
+      </nav>
+    </header>
+    <section class="hero">
+      <div class="hero__content-box">
+        <div class="hero__slogan">
+          <h1>輕鬆享受台北一日悠閒</h1>
+          <p class="body-bold">探索每個角落，體驗城市的深度旅遊行程</p>
+        </div>
+        <div class="hero__search">
+          <input
+            type="text"
+            name="attraction"
+            id="attraction"
+            class="body-bold"
+            placeholder="輸入景點名稱查詢"
+          />
+          <button class="keyword-search">
+            <div class="btn__background">
+              <img
+                class="btn__icon"
+                src="/static/images/icon_search.png"
+                alt="搜尋"
+              />
+            </div>
+          </button>
+        </div>
+      </div>
+    </section>
+    <main>
+      <section class="mrt-bar">
+        <div class="mrt-bar__arrow mrt-bar__arrow--left">
+          <img
+            class="left-arrow"
+            src="/static/images/left arrow.png"
+            alt="左箭頭"
+          />
+        </div>
+        <div class="mrt-bar__container">
+          <!-- <div class="mrt body-med">劍潭</div> -->
+        </div>
+        <div class="mrt-bar__arrow mrt-bar__arrow--right">
+          <img
+            class="right-arrow"
+            src="/static/images/right arrow.png"
+            alt="右箭頭"
+          />
+        </div>
+      </section>
+      <section class="attraction">
+        <!-- <div class="attraction__box--outer">
+          <div class="attraction__box">
+            <div class="attraction__img">
+              <img src="/static/images/麥可.jpg" alt="景點圖片" />
+            </div>
+            <div class="attraction__name body-bold">麥可</div>
+            <div class="attraction__info">
+              <div class="attraction-mrt">捷運站</div>
+              <div class="attraction-cat">景點分類</div>
+            </div>
+          </div>
+        </div> -->
+      </section>
+    </main>
+    <footer>
+      <p class="body-bold">COPYRIGHT © 2021 台北一日遊</p>
+    </footer>
+    <!-- popup menu-->
+    <section class="popup">
+      <div class="popup__background">
+        <div class="popup__form-block">
+          <div class="form-block__decorateor-bar"></div>
+          <div class="form-block__content">
+            <h3 class="signin bold">登入會員帳號</h3>
+            <h3 class="signup bold">註冊會員帳號</h3>
+            <input
+              type="text"
+              name="name"
+              class="name body-med signup"
+              placeholder="輸入姓名"
+            />
+            <input
+              type="text"
+              name="email"
+              class="email body-med"
+              placeholder="輸入電子信箱"
+            />
+            <input
+              type="password"
+              name="password"
+              class="password body-med"
+              placeholder="輸入密碼"
+            />
+            <button class="signin">登入帳戶</button>
+            <button class="signup">註冊新帳戶</button>
+            <p class="signin body-med">還沒有帳戶?點此註冊</p>
+            <p class="signup body-med">已經有帳戶了?點此登入</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </body>
 </html>
