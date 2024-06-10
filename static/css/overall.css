@@ -40,6 +40,12 @@
 * button:hover {
   cursor: pointer;
 }
+* button.regular {
+  font-size: 19px;
+  line-height: 16px;
+  font-weight: 400;
+  align-items: center;
+}
 * input {
   border: none;
   outline: medium;
@@ -75,4 +81,18 @@ body .header__page {
 body .header__btn {
   color: #666666;
   padding: 10px;
+}
+body main {
+  min-height: calc(100vh - 158px);
+}
+body footer {
+  width: 100%;
+  height: 104px;
+  background-color: #666666;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+body footer p {
+  color: #ffffff;
 }/*# sourceMappingURL=overall.css.map */

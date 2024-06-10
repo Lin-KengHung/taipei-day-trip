@@ -15,47 +15,70 @@
     <script defer src="/static/app/attraction.js"></script>
   </head>
   <body>
-    <header>
-      <nav>
-        <h2>台北一日遊</h2>
-        <div class="page">
-          <button class="btn">預定行程</button>
-          <button class="btn">登入/註冊</button>
+    <header class="header">
+      <nav class="header__nav">
+        <h2 class="header__title">台北一日遊</h2>
+        <div class="header__page">
+          <button class="header__btn">預定行程</button>
+          <button class="header__btn">登入/註冊</button>
         </div>
       </nav>
     </header>
     <main>
-      <section class="booking">
-        <div class="profile-image">
-          <img src="./images/left arrow.png" alt="左箭頭" />
+      <section class="profile">
+        <div class="profile__image-box">
+          <img
+            class="profile__btn profile__btn--left"
+            src="./images/btn_leftArrow.png"
+            alt="左箭頭"
+          />
           <img class="attraction" src="./images/麥可.jpg" alt="景點圖片" />
-          <img src="./images/right arrow.png" alt="右箭頭" />
+          <img
+            class="profile__btn profile__btn--right"
+            src="./images/btn_rightArrow.png"
+            alt="右箭頭"
+          />
         </div>
-        <div class="profile-content">
+        <div class="profile__content">
           <h3>麥可</h3>
-          <div>分類at捷運站</div>
-          <div class="booking-form">
-            <p>訂購導覽行程</p>
-            <p>以此景點為中心的一日行程，帶您探索城市角落故事</p>
-            <label for="date">選擇日期: </label>
-            <input type="date" id="date" name="date" />
-            <p class="time">選擇時間</p>
-            <input type="radio" id="morning" name="time" />
-            <label for="morning">上半天</label>
-            <input type="radio" id="afternoon" name="time" />
-            <label for="afternoon">下半天</label>
-            <p>導覽費用: 新台幣2000元</p>
-            <button>開始預約行程</button>
+          <p>分類 at 捷運站</p>
+          <div class="profile__content--form">
+            <p class="form__title body-bold">訂購導覽行程</p>
+            <p class="form__title form__title--slogan body-med">
+              以此景點為中心的一日行程，帶您探索城市角落故事
+            </p>
+            <div class="form__option form__option--date">
+              <div class="form__option--date body-bold">選擇日期：</div>
+              <input type="date" id="date" name="date" class="body-med" />
+            </div>
+            <div class="form__option form__option--time">
+              <div class="form__option--time body-bold">選擇時間：</div>
+              <label for="morning">
+                <input type="radio" id="morning" name="time" />
+                <div class="radio-btn"></div>
+                <span>上半天</span>
+              </label>
+              <label for="afternoon">
+                <input type="radio" id="afternoon" name="time" />
+                <div class="radio-btn"></div>
+                <span>下半天</span>
+              </label>
+            </div>
+            <div class="form__option form__option--cost">
+              <div class="form__option--cost-title body-bold">導覽費用：</div>
+              <div class="form__option--cost-price">新台幣 2000 元</div>
+            </div>
+            <button class="form__btn regular">開始預約行程</button>
           </div>
         </div>
       </section>
       <div class="separator"></div>
-      <section class="attraction-info">
-        <div class="description">
+      <section class="info">
+        <span class="info__description">
           麥可車禍：「麥可」陳宇風在劇中慘遭卡車撞飛畫面太過誇張、違反正常人應有的物理知識，成為日後網友惡搞本土劇的經典笑料（第45集播出）。
           捏爆橘子：雷洪的「捏爆橘子」（北斗爆橘拳）一幕讓網友感覺太無厘頭，網路爭相後製而爆紅（第64集播出）。甚連同時段三立台灣台《家和萬事興》也有惡搞橋段。
           珍奶顏射：飾演「金居福」的雷洪好心送給兒子珍奶，但兒子不領情的將珍奶顏射滿了他老臉，引發觀眾顛倒倫理、有誤導同齡觀眾視聽的非議（第66集播出）。
-        </div>
+        </span>
         <div>景點地址</div>
         <div>臺北市 大安區忠孝東路4段</div>
         <div>交通方式</div>
@@ -65,5 +88,8 @@
         </div>
       </section>
     </main>
+    <footer>
+      <p class="body-bold">COPYRIGHT © 2021 台北一日遊</p>
+    </footer>
   </body>
 </html>

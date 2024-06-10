@@ -3,21 +3,140 @@ body main {
   flex-direction: column;
   align-items: center;
 }
-body main section.booking {
-  border: 2px solid black;
+body main .profile {
   margin-top: 40px;
   max-width: 1200px;
+  height: 400px;
   display: flex;
   justify-content: center;
 }
-body main section.booking div.profile-image {
-  width: 600px;
-  padding: 0px 15px;
-}
-body main section.booking div.profile-image img.attraction {
+body main .profile__image-box {
   width: 100%;
-}
-body main section.booking div.profile-content {
-  width: 600px;
+  height: 100%;
+  position: relative;
   padding: 0px 15px;
+}
+body main .profile__image-box img.attraction {
+  width: 100%;
+  height: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
+  border-radius: 5px;
+}
+body main .profile__btn {
+  position: absolute;
+  width: 36px;
+  height: 36px;
+  top: 182px;
+}
+body main .profile__btn--left {
+  left: 30px;
+}
+body main .profile__btn--right {
+  right: 30px;
+}
+body main .profile__content {
+  width: 100%;
+  padding: 0px 15px;
+  color: #666666;
+}
+body main .profile__content h3 {
+  margin-bottom: 15px;
+}
+body main .profile__content p {
+  margin-bottom: 20px;
+}
+body main .profile__content--form {
+  width: 100%;
+  height: 302px;
+  background-color: #e8e8e8;
+  margin-bottom: 8px;
+  border-radius: 5px;
+  padding: 15px 20px;
+  position: relative;
+}
+body main .profile__content--form .form__title {
+  margin-bottom: 15px;
+  height: 22px;
+  display: flex;
+  align-items: center;
+}
+body main .profile__content--form .form__title--slogan {
+  height: 24px;
+}
+body main .profile__content--form .form__option {
+  margin-bottom: 15px;
+  display: flex;
+  align-items: center;
+  padding: 0px;
+}
+body main .profile__content--form .form__option--date input {
+  margin-left: 5px;
+  width: 193px;
+  height: 35px;
+  position: relative;
+}
+body main .profile__content--form .form__option--date input::-webkit-calendar-picker-indicator {
+  position: absolute;
+  left: 159px;
+  width: 24px;
+  height: 24px;
+  background-image: url("../images/calendar.png");
+  cursor: pointer;
+}
+body main .profile__content--form .form__option--time {
+  display: flex;
+  gap: 5px;
+}
+body main .profile__content--form .form__option--time label {
+  width: 87px;
+  display: inline-flex;
+  gap: 4px;
+  padding-left: 5px;
+  align-items: center;
+  cursor: pointer;
+}
+body main .profile__content--form .form__option--time label .radio-btn {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background-color: white;
+  position: relative;
+}
+body main .profile__content--form .form__option--time label input {
+  display: none;
+}
+body main .profile__content--form .form__option--time label input:checked + .radio-btn::before {
+  content: "";
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  top: 2px;
+  left: 2px;
+  border-radius: 50%;
+  background-color: #448899;
+}
+body main .profile__content--form .form__option--cost {
+  display: flex;
+  gap: 5px;
+}
+body main .profile__content--form .form__btn {
+  background-color: #448899;
+  color: white;
+  position: absolute;
+  top: 225px;
+  left: 20px;
+  padding: 10px 20px;
+  border-radius: 5px;
+}
+body main .separator {
+  margin-top: 40px;
+  width: 1200px;
+  border-top: 1px solid #e8e8e8;
+}
+body main .info {
+  border: 2px solid black;
+  margin-top: 40px;
+  width: 1200px;
+  padding: 10px;
 }/*# sourceMappingURL=attraction.css.map */
