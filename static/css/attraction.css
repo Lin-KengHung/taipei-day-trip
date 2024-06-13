@@ -1,23 +1,237 @@
 body main {
+  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
 }
-body main section.booking {
-  border: 2px solid black;
+body main .profile {
   margin-top: 40px;
+  width: 100%;
   max-width: 1200px;
+  height: 400px;
   display: flex;
   justify-content: center;
 }
-body main section.booking div.profile-image {
-  width: 600px;
-  padding: 0px 15px;
-}
-body main section.booking div.profile-image img.attraction {
+body main .profile__image-box {
   width: 100%;
+  height: 100%;
+  position: relative;
+  display: flex;
+  justify-content: center;
 }
-body main section.booking div.profile-content {
-  width: 600px;
+body main .profile__image-box--outer {
+  width: 100%;
+  max-width: 570px;
+  height: 100%;
+  padding: 0 15px;
+}
+body main .profile__image-box img.attraction {
+  width: 100%;
+  max-width: 540px;
+  height: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
+  border-radius: 5px;
+  position: absolute;
+  z-index: 1;
+  transition: opacity 0.3s ease-in-out;
+}
+body main .profile__arrow-btn {
+  position: absolute;
+  width: 36px;
+  height: 36px;
+  top: 182px;
+  opacity: 0.75;
+  z-index: 3;
+}
+body main .profile__arrow-btn:hover {
+  transition: 0.3s ease;
+  cursor: pointer;
+  opacity: 1;
+}
+body main .profile__arrow-btn--left {
+  left: 10px;
+}
+body main .profile__arrow-btn--right {
+  right: 10px;
+}
+body main .profile__imgNo {
+  height: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  bottom: 10px;
+  z-index: 3;
+}
+body main .profile__imgNo .circle {
+  background-color: white;
+  width: 12px;
+  height: 12px;
+  border: 1px solid white;
+  border-radius: 50%;
+  margin: 0 10px;
+  opacity: 0.7;
+}
+body main .profile__imgNo .circle:hover {
+  cursor: pointer;
+}
+body main .profile__imgNo--input {
+  display: none;
+}
+body main .profile__imgNo--input:checked + .circle {
+  background-color: black;
+}
+body main .profile__content {
+  width: 100%;
+  max-width: 630px;
   padding: 0px 15px;
+  color: #666666;
+}
+body main .profile__content h3 {
+  height: 33px;
+  margin-bottom: 15px;
+  display: flex;
+  align-items: center;
+}
+body main .profile__content--form {
+  width: 100%;
+  height: 302px;
+  background-color: #e8e8e8;
+  margin-bottom: 8px;
+  border-radius: 5px;
+  padding: 15px 20px;
+  position: relative;
+}
+body main .profile__content--form .form__title {
+  margin-bottom: 15px;
+  line-height: 22px;
+  height: auto;
+}
+body main .profile__content--form .form__title--slogan {
+  line-height: 24px;
+}
+body main .profile__content--form .form__option {
+  margin-bottom: 15px;
+  display: flex;
+  align-items: center;
+  padding: 0px;
+}
+body main .profile__content--form .form__option--date input {
+  margin-left: 5px;
+  width: 193px;
+  height: 35px;
+  position: relative;
+}
+body main .profile__content--form .form__option--date input::-webkit-calendar-picker-indicator {
+  position: absolute;
+  left: 159px;
+  width: 24px;
+  height: 24px;
+  background-image: url("../images/calendar.png");
+  cursor: pointer;
+}
+body main .profile__content--form .form__option--time {
+  display: flex;
+  gap: 5px;
+  line-height: 22px;
+}
+body main .profile__content--form .form__option--time label {
+  width: 87px;
+  display: inline-flex;
+  gap: 4px;
+  padding-left: 5px;
+  align-items: center;
+  cursor: pointer;
+}
+body main .profile__content--form .form__option--time label .radio-btn {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background-color: white;
+  position: relative;
+}
+body main .profile__content--form .form__option--time label input {
+  display: none;
+}
+body main .profile__content--form .form__option--time label input:checked + .radio-btn::before {
+  content: "";
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  top: 2px;
+  left: 2px;
+  border-radius: 50%;
+  background-color: #448899;
+}
+body main .profile__content--form .form__option--cost {
+  line-height: 22px;
+  margin-bottom: 25px;
+  display: flex;
+  gap: 5px;
+}
+body main .profile__content--form .form__btn {
+  background-color: #448899;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 5px;
+}
+body main .profile__content--cat-mrt {
+  height: 22px;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+}
+body main .separator {
+  margin-top: 40px;
+  width: 100%;
+  max-width: 1200px;
+  border-top: 1px solid #e8e8e8;
+}
+body main .info {
+  margin: 40px 0;
+  width: 100%;
+  max-width: 1200px;
+  padding: 10px;
+  color: #666666;
+  line-height: 24px;
+}
+body main .info__title {
+  line-height: 32px;
+  margin-top: 20px;
+}
+
+@media screen and (max-width: 800px) {
+  body main .profile {
+    margin: 0;
+    padding: 0;
+    height: auto;
+    display: block;
+  }
+  body main .profile__image-box {
+    width: 100%;
+  }
+  body main .profile__image-box--outer {
+    max-width: none;
+    height: 350px;
+    padding: 0;
+  }
+  body main .profile__image-box img.attraction {
+    border-radius: 0;
+    max-width: none;
+  }
+  body main .profile__arrow-btn {
+    top: 157px;
+  }
+  body main .profile__arrow-btn--left {
+    left: 10px;
+  }
+  body main .profile__arrow-btn--right {
+    right: 10px;
+  }
+  body main .profile__content {
+    margin-top: 20px;
+    max-width: none;
+    padding: 0 10px;
+  }
 }/*# sourceMappingURL=attraction.css.map */

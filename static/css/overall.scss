@@ -31,6 +31,10 @@ $SecondaryColor: #666666;
     font-weight: 500px;
     line-height: 13.3px;
   }
+  .content-reg {
+    font-size: 16px;
+    font-weight: 400;
+  }
   button {
     outline: none;
     background-color: transparent;
@@ -41,6 +45,12 @@ $SecondaryColor: #666666;
     &:hover {
       cursor: pointer;
     }
+  }
+  button.regular {
+    font-size: 19px;
+    line-height: 16px;
+    font-weight: 400;
+    align-items: center;
   }
   input {
     border: none;
@@ -54,7 +64,7 @@ body {
     position: sticky;
     box-shadow: 0 1px 20px 0 $SecondaryColor;
     top: 0;
-    z-index: 2;
+    z-index: 10;
     background-color: #ffffff;
     width: 100%;
     height: 54px;
@@ -69,6 +79,9 @@ body {
     }
     &__title {
       color: $PrimaryColor;
+      &:hover {
+        cursor: pointer;
+      }
     }
     &__page {
       display: flex;
@@ -78,6 +91,29 @@ body {
     &__btn {
       color: $SecondaryColor;
       padding: 10px;
+    }
+  }
+  main {
+    min-height: calc(100vh - 158px);
+  }
+  footer {
+    width: 100%;
+    height: 104px;
+
+    background-color: $SecondaryColor;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    p {
+      color: #ffffff;
+    }
+  }
+}
+
+@media screen and (max-width: 1200px) {
+  body {
+    .header {
+      padding: 10px 0 10px 10px;
     }
   }
 }

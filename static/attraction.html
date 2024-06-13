@@ -15,55 +15,101 @@
     <script defer src="/static/app/attraction.js"></script>
   </head>
   <body>
-    <header>
-      <nav>
-        <h2>台北一日遊</h2>
-        <div class="page">
-          <button class="btn">預定行程</button>
-          <button class="btn">登入/註冊</button>
+    <header class="header">
+      <nav class="header__nav">
+        <h2 class="header__title">台北一日遊</h2>
+        <div class="header__page">
+          <button class="header__btn">預定行程</button>
+          <button class="header__btn">登入/註冊</button>
         </div>
       </nav>
     </header>
     <main>
-      <section class="booking">
-        <div class="profile-image">
-          <img src="./images/left arrow.png" alt="左箭頭" />
-          <img class="attraction" src="./images/麥可.jpg" alt="景點圖片" />
-          <img src="./images/right arrow.png" alt="右箭頭" />
+      <section class="profile">
+        <div class="profile__image-box--outer">
+          <div class="profile__image-box">
+            <img
+              class="profile__arrow-btn profile__arrow-btn--left"
+              src="/static/images/btn_leftArrow.png"
+              alt="左箭頭"
+            />
+            <!-- <img
+              class="attraction"
+              src="./images/麥可.jpg"
+              alt="景點圖片"
+              style="z-index: auto; display: none"
+            /> -->
+            <img
+              class="profile__arrow-btn profile__arrow-btn--right"
+              src="/static/images/btn_rightArrow.png"
+              alt="右箭頭"
+            />
+            <div class="profile__imgNo"></div>
+          </div>
         </div>
-        <div class="profile-content">
-          <h3>麥可</h3>
-          <div>分類at捷運站</div>
-          <div class="booking-form">
-            <p>訂購導覽行程</p>
-            <p>以此景點為中心的一日行程，帶您探索城市角落故事</p>
-            <label for="date">選擇日期: </label>
-            <input type="date" id="date" name="date" />
-            <p class="time">選擇時間</p>
-            <input type="radio" id="morning" name="time" />
-            <label for="morning">上半天</label>
-            <input type="radio" id="afternoon" name="time" />
-            <label for="afternoon">下半天</label>
-            <p>導覽費用: 新台幣2000元</p>
-            <button>開始預約行程</button>
+        <div class="profile__content">
+          <h3 class="profile__content--name bold"></h3>
+          <div class="profile__content--cat-mrt body-med">
+            <span class="profile__content--cat"></span>
+
+            <span class="profile__content--mrt"></span>
+          </div>
+          <div class="profile__content--form">
+            <p class="form__title body-bold">訂購導覽行程</p>
+            <p class="form__title form__title--slogan body-med">
+              以此景點為中心的一日行程，帶您探索城市角落故事
+            </p>
+            <div class="form__option form__option--date">
+              <div class="form__option--date body-bold">選擇日期：</div>
+              <input type="date" id="date" name="date" class="body-med" />
+            </div>
+            <div class="form__option form__option--time">
+              <div class="form__option--time body-bold">選擇時間：</div>
+              <label for="morning">
+                <input
+                  type="radio"
+                  id="morning"
+                  name="time"
+                  value="morning"
+                  checked
+                />
+                <div class="radio-btn"></div>
+                <span>上半天</span>
+              </label>
+              <label for="afternoon">
+                <input
+                  type="radio"
+                  id="afternoon"
+                  name="time"
+                  value="afternoon"
+                />
+                <div class="radio-btn"></div>
+                <span>下半天</span>
+              </label>
+            </div>
+            <div class="form__option form__option--cost">
+              <div class="form__option--cost-title body-bold">導覽費用：</div>
+              <div class="form__option--cost-price">
+                <span>新台幣&nbsp</span>
+                <span id="price">2000</span>
+                <span>&nbsp元</span>
+              </div>
+            </div>
+            <button class="form__btn regular">開始預約行程</button>
           </div>
         </div>
       </section>
       <div class="separator"></div>
-      <section class="attraction-info">
-        <div class="description">
-          麥可車禍：「麥可」陳宇風在劇中慘遭卡車撞飛畫面太過誇張、違反正常人應有的物理知識，成為日後網友惡搞本土劇的經典笑料（第45集播出）。
-          捏爆橘子：雷洪的「捏爆橘子」（北斗爆橘拳）一幕讓網友感覺太無厘頭，網路爭相後製而爆紅（第64集播出）。甚連同時段三立台灣台《家和萬事興》也有惡搞橋段。
-          珍奶顏射：飾演「金居福」的雷洪好心送給兒子珍奶，但兒子不領情的將珍奶顏射滿了他老臉，引發觀眾顛倒倫理、有誤導同齡觀眾視聽的非議（第66集播出）。
-        </div>
-        <div>景點地址</div>
-        <div>臺北市 大安區忠孝東路4段</div>
-        <div>交通方式</div>
-        <div>
-          捷運站名：忠孝復興站4號出口1.公車：204、212、212直、232、232副、262、262(區間)、278、299、521、605、605(副)、605(新台五線)、667、903、忠孝新幹線至頂好市場站
-          2.車位：太平洋崇光百貨地下停車場或市民大道附近地下停車場
-        </div>
+      <section class="info">
+        <p class="info__description content-reg"></p>
+        <div class="info__title body-bold">景點地址：</div>
+        <p class="info__address content-reg"></p>
+        <div class="info__title body-bold">交通方式：</div>
+        <p class="info__traffic content-reg"></p>
       </section>
     </main>
+    <footer>
+      <p class="body-bold">COPYRIGHT © 2021 台北一日遊</p>
+    </footer>
   </body>
 </html>

@@ -58,6 +58,7 @@ body .hero__search button .btn__icon {
   left: 15px;
 }
 body main {
+  min-height: calc(100vh - 578px);
   width: 100%;
   margin: 50px 0;
   display: flex;
@@ -121,6 +122,14 @@ body main .attraction {
   flex-wrap: wrap;
   justify-content: center;
 }
+body main .attraction__cover {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 2;
+  width: 100%;
+  height: 100%;
+}
 body main .attraction__box {
   width: 100%;
   margin: 15px;
@@ -138,6 +147,7 @@ body main .attraction__box--outer {
 body main .attraction__box:hover {
   transition: 0.2s ease-out;
   box-shadow: 0 1px 20px 0 #666666;
+  cursor: pointer;
 }
 body main .attraction__img {
   width: 100%;
@@ -175,17 +185,6 @@ body main .attraction__info {
   align-items: center;
   padding: 10px;
   color: #666666;
-}
-body footer {
-  width: 100%;
-  height: 104px;
-  background-color: #666666;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-body footer p {
-  color: #ffffff;
 }
 body .popup {
   display: none;
@@ -245,18 +244,15 @@ body .popup__form-block .form-block__content p {
 }
 
 @media screen and (max-width: 1199px) {
-  body .header {
-    padding: 10px 0 10px 10px;
-  }
-  body .hero {
+  .hero {
     padding: 10px;
   }
-  body main .attraction__box--outer {
+  main .attraction__box--outer {
     flex: 1 0 50%;
     max-width: 50%;
     height: 375px;
   }
-  body main .attraction__img {
+  main .attraction__img {
     height: 300px;
   }
 }
