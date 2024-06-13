@@ -45,8 +45,13 @@ leftBtn.addEventListener("click", (e) => {
 });
 
 // --------------------mrt search as keyword--------------------
-
 searchKeywordByMRT();
+// --------------------refresh--------------------
+
+let webTilte = document.querySelector(".header__title");
+webTilte.addEventListener("click", (e) => {
+  location.reload();
+});
 
 // --------------------function part--------------------
 
@@ -65,9 +70,19 @@ async function renderAttraction(page = 0, keyword = "") {
       data.data[i].images[0],
       data.data[i].name,
       mrt,
-      data.data[i].category
+      data.data[i].category,
+      data.data[i].id
     );
   }
+
+  let allAttraction = document.querySelectorAll("div.attraction__box");
+  allAttraction.forEach((attraction) => {
+    // attraction.addEventListener("click", redirect2Attraction);
+    attraction.addEventListener("click", (e) => {
+      let attractionID = e.target.id;
+      window.location.href = "/attraction/" + attractionID;
+    });
+  });
 }
 
 async function renderMrts() {
@@ -82,9 +97,10 @@ async function renderMrts() {
   }
 }
 
-function addAttractionBoxes(imgURL, name, mrt, cat) {
+function addAttractionBoxes(imgURL, name, mrt, cat, id) {
   let box = `<div class="attraction__box--outer">
         <div class="attraction__box">
+            <div class="attraction__cover" id=${id}></div>
             <div class="attraction__img">
                 <img src="${imgURL}" alt="景點圖片" />
             </div>

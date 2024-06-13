@@ -3,50 +3,100 @@ $SecondaryColor: #666666;
 
 body {
   main {
+    width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
     .profile {
       margin-top: 40px;
+      width: 100%;
       max-width: 1200px;
       height: 400px;
       display: flex;
       justify-content: center;
-
       &__image-box {
+        &--outer {
+          width: 100%;
+          max-width: 570px;
+          height: 100%;
+          padding: 0 15px;
+        }
         width: 100%;
         height: 100%;
         position: relative;
-        padding: 0px 15px;
+        display: flex;
+        justify-content: center;
+
         img.attraction {
           width: 100%;
+          max-width: 540px;
           height: 100%;
           object-fit: cover;
           border-radius: 5px;
+          position: absolute;
+          z-index: 1;
+          transition: opacity 0.3s ease-in-out;
         }
       }
-      &__btn {
+      &__arrow-btn {
         position: absolute;
         width: 36px;
         height: 36px;
         top: 182px;
+        opacity: 0.75;
+        z-index: 3;
+        &:hover {
+          transition: 0.3s ease;
+          cursor: pointer;
+          opacity: 1;
+        }
         &--left {
-          left: 30px;
+          left: 10px;
         }
         &--right {
-          right: 30px;
+          right: 10px;
+        }
+      }
+      &__imgNo {
+        height: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: absolute;
+        bottom: 10px;
+        z-index: 3;
+
+        .circle {
+          background-color: white;
+          width: 12px;
+          height: 12px;
+          border: 1px solid white;
+          border-radius: 50%;
+          margin: 0 10px;
+          opacity: 0.7;
+          &:hover {
+            cursor: pointer;
+          }
+        }
+        &--input {
+          display: none;
+        }
+        &--input:checked + .circle {
+          background-color: black;
         }
       }
       &__content {
         width: 100%;
+        max-width: 630px;
         padding: 0px 15px;
         color: $SecondaryColor;
         h3 {
+          height: 33px;
           margin-bottom: 15px;
+          display: flex;
+          align-items: center;
         }
-        p {
-          margin-bottom: 20px;
-        }
+
         &--form {
           width: 100%;
           height: 302px;
@@ -58,11 +108,10 @@ body {
           .form {
             &__title {
               margin-bottom: 15px;
-              height: 22px;
-              display: flex;
-              align-items: center;
+              line-height: 22px;
+              height: auto;
               &--slogan {
-                height: 24px;
+                line-height: 24px;
               }
             }
 
@@ -90,6 +139,7 @@ body {
               &--time {
                 display: flex;
                 gap: 5px;
+                line-height: 22px;
                 label {
                   width: 87px;
                   display: inline-flex;
@@ -120,6 +170,8 @@ body {
                 }
               }
               &--cost {
+                line-height: 22px;
+                margin-bottom: 25px;
                 display: flex;
                 gap: 5px;
               }
@@ -128,27 +180,76 @@ body {
             &__btn {
               background-color: $PrimaryColor;
               color: white;
-              position: absolute;
-              top: 225px;
-              left: 20px;
               padding: 10px 20px;
               border-radius: 5px;
             }
           }
         }
+        &--cat-mrt {
+          height: 22px;
+          margin-bottom: 20px;
+          display: flex;
+          align-items: center;
+        }
       }
     }
     .separator {
       margin-top: 40px;
-      width: 1200px;
+      width: 100%;
+      max-width: 1200px;
       border-top: 1px solid #e8e8e8;
     }
     .info {
-      border: 2px solid black;
-      margin-top: 40px;
-      width: 1200px;
-
+      margin: 40px 0;
+      width: 100%;
+      max-width: 1200px;
       padding: 10px;
+      color: $SecondaryColor;
+      line-height: 24px;
+      &__title {
+        line-height: 32px;
+        margin-top: 20px;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 800px) {
+  body {
+    main {
+      .profile {
+        margin: 0;
+        padding: 0;
+        height: auto;
+        display: block;
+
+        &__image-box {
+          &--outer {
+            max-width: none;
+            height: 350px;
+            padding: 0;
+          }
+          width: 100%;
+          img.attraction {
+            border-radius: 0;
+            max-width: none;
+          }
+        }
+        &__arrow-btn {
+          top: 157px;
+          &--left {
+            left: 10px;
+          }
+          &--right {
+            right: 10px;
+          }
+        }
+        &__content {
+          margin-top: 20px;
+          max-width: none;
+          padding: 0 10px;
+        }
+      }
     }
   }
 }
