@@ -46,7 +46,7 @@ def make_JWT(id, name, email) -> str:
     return token
 
 class JWTBearer(HTTPBearer):
-    def __init__(self, auto_error: bool = True):
+    def __init__(self, auto_error: bool = False):
         super(JWTBearer, self).__init__(auto_error=auto_error)
 
     async def __call__(self, request: Request):
@@ -59,7 +59,7 @@ class JWTBearer(HTTPBearer):
                 raise CustomizeRaise(status_code=403, message="無效token或是過期")
             return payload
         else:
-            raise CustomizeRaise(status_code=403, message="授權碼無效")
+            raise CustomizeRaise(status_code=403, message="未登入系統或是授權碼無效")
 
     def decode_JWT(self, token):
         try:

@@ -1,9 +1,10 @@
 from fastapi import *
 from fastapi.responses import FileResponse, JSONResponse
-from router import attraction, user
-from pydantic import BaseModel
+from router import attraction, user, booking
 from router import Error, CustomizeRaise
 from fastapi.staticfiles import StaticFiles
+from fastapi.exceptions import RequestValidationError
+
 
 app = FastAPI(
 	title="APIs for Taipei Day Trip",
@@ -13,6 +14,7 @@ app = FastAPI(
 
 app.include_router(attraction.router)
 app.include_router(user.router)
+app.include_router(booking.router)
 app.mount("/static", StaticFiles(directory="static"), name="static")
 
 # @app.middleware("http")
@@ -29,6 +31,11 @@ app.mount("/static", StaticFiles(directory="static"), name="static")
 async def error_raise(requset: Request, exc: CustomizeRaise):
 	return JSONResponse(status_code=exc.status_code, content=Error(message=exc.message).model_dump())
 
+@app.exception_handler(RequestValidationError)
+async def validation_exception_handler(request: Request, exc: RequestValidationError):
+	error = exc.errors()[0]
+	message = f'錯誤欄位:{error["loc"]}, 錯誤訊息: {error["msg"]}, 錯誤類型: {error["type"]}'
+	return JSONResponse(status_code=400,content=Error(message=message).model_dump())
 
 # Static Pages (Never Modify Code in this Block)
 @app.get("/", include_in_schema=False)
