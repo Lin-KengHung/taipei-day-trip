@@ -1,11 +1,173 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Booking</title>
-</head>
-<body>
-  
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Booking</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100..900&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/static/css/overall.css" />
+    <link rel="stylesheet" href="/static/css/booking.css" />
+    <script defer src="/static/app/booking.js"></script>
+    <script defer src="/static/app/user.js"></script>
+  </head>
+  <body>
+    <header class="header">
+      <nav class="header__nav">
+        <h2 class="header__title">台北一日遊</h2>
+        <div class="header__page">
+          <button class="header__btn header__btn--booking">預定行程</button>
+          <button class="header__btn header__btn--user">登入/註冊</button>
+        </div>
+      </nav>
+    </header>
+    <main>
+      <section class="booking">
+        <div class="booking__welcome btn-bold">
+          您好，
+          <span>麥可</span>
+          ，帶預定的行程如下：
+        </div>
+        <div class="booking__profile">
+          <div class="booking__profile--img">
+            <img src="./images/麥可.jpg" alt="景點圖片" />
+          </div>
+          <div class="booking__profile--infor">
+            <div class="booking__profile--title body-bold">
+              台北一日遊：
+              <span class="infor__data--attraction-name">平安鐘</span>
+            </div>
+            <div class="booking__profile--content">
+              <span class="infor__subtitle body-bold">日期：</span>
+              <span class="infor__data infor__data--date body-med"
+                >2021-04-23</span
+              >
+            </div>
+            <div class="booking__profile--content">
+              <span class="infor__subtitle body-bold">時間：</span>
+              <span class="infor__data infor__data--time body-med"
+                >早上9點到下午4點</span
+              >
+            </div>
+            <div class="booking__profile--content">
+              <span class="infor__subtitle body-bold">費用：</span>
+              <span class="infor__data infor__data--cost body-med"
+                >新台幣2000元</span
+              >
+            </div>
+            <div class="booking__profile--content">
+              <span class="infor__subtitle body-bold">地點：</span>
+              <span class="infor__data infor__data--address body-med"
+                >台北市大安區之類的</span
+              >
+            </div>
+            <img
+              src="/static/images/delete.png"
+              alt="垃圾桶icon"
+              class="booking__delete-icon"
+            />
+          </div>
+        </div>
+      </section>
+      <div class="separator separator-top"></div>
+      <form class="form" action="">
+        <section class="contact">
+          <div class="contact__title btn-bold">您的聯絡資訊</div>
+          <div class="contact__input">
+            <label for="name" class="contact__input--subtitle body-med"
+              >聯絡姓名：</label
+            ><!--
+            --><input
+              type="text"
+              id="name"
+              class="contact__input--name body-med"
+              placeholder="Yakko"
+            />
+          </div>
+
+          <div class="contact__input">
+            <label for="email" class="contact__input--subtitle body-med"
+              >聯絡信箱：</label
+            ><!--
+            --><input
+              type="email"
+              id="email"
+              class="contact__input--email body-med"
+              placeholder="wehelp@pada-x.com"
+            />
+          </div>
+
+          <div class="contact__input">
+            <label for="phone" class="contact__input--subtitle body-med"
+              >手機號碼：</label
+            ><!--
+            --><input
+              type="tel"
+              id="phone"
+              class="contact__input--phone body-med"
+              placeholder="0912345678"
+            />
+          </div>
+          <div class="contact__notice body-bold">
+            請保持手機暢通，準時到達，導覽人員將用手機與您聯繫，務必留下正確的聯絡方式。
+          </div>
+        </section>
+        <div class="separator"></div>
+        <section class="payment">
+          <div class="payment__title btn-bold">信用卡付款資訊</div>
+          <div class="payment__input">
+            <label for="card-number" class="payment__input--subtitle body-med"
+              >卡片號碼：</label
+            ><!--
+            --><input
+              type="text"
+              id="card-number"
+              class="payment__input--car-number body-med"
+              placeholder="**** **** **** ****"
+            />
+          </div>
+
+          <div class="payment__input">
+            <label for="card-expire" class="payment__input--subtitle body-med"
+              >過期時間：</label
+            ><!--
+            --><input
+              type="text"
+              id="card-expire"
+              class="payment__input--expire body-med"
+              placeholder="MM / YY"
+            />
+          </div>
+
+          <div class="payment__input">
+            <label for="card-CVV" class="payment__input--subtitle body-med"
+              >驗證密碼：</label
+            ><!--
+            --><input
+              type="text"
+              id="card-CVV"
+              class="payment__input--CVV body-med"
+              placeholder="CVV"
+            />
+          </div>
+        </section>
+        <div class="separator"></div>
+        <section class="confirm">
+          <div class="confirm__total-price body-bold">
+            總價：新台幣&nbsp
+            <span>2000</span>
+            &nbsp元
+          </div>
+          <button class="confirm__btn btn-reg">確認訂購並付款</button>
+        </section>
+      </form>
+    </main>
+    <footer>
+      <p class="body-bold">COPYRIGHT © 2021 台北一日遊</p>
+    </footer>
+  </body>
 </html>

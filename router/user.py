@@ -38,7 +38,6 @@ class Token(BaseModel):
 async def signup(user: UserSignUpInput):
     connect = connection_pool.get_connection()
     mycursor = connect.cursor(dictionary=True)
-    ## Verify if the input conforms to the defined format
 
     ## Verify if the email has existed in database
     mycursor.execute("SELECT 1 FROM user WHERE email = %s LIMIT 1", (user.email,))

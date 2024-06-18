@@ -13,14 +13,15 @@
     <link rel="stylesheet" href="/static/css/overall.css" />
     <link rel="stylesheet" href="/static/css/attraction.css" />
     <script defer src="/static/app/attraction.js"></script>
+    <script defer src="/static/app/user.js"></script>
   </head>
   <body>
     <header class="header">
       <nav class="header__nav">
         <h2 class="header__title">台北一日遊</h2>
         <div class="header__page">
-          <button class="header__btn">預定行程</button>
-          <button class="header__btn">登入/註冊</button>
+          <button class="header__btn header__btn--booking">預定行程</button>
+          <button class="header__btn header__btn--user">登入/註冊</button>
         </div>
       </nav>
     </header>
@@ -44,7 +45,12 @@
               src="/static/images/btn_rightArrow.png"
               alt="右箭頭"
             />
-            <div class="profile__imgNo"></div>
+            <div class="profile__imgNo">
+              <!-- <label class="profile__imgNo--box ">
+                <input type="radio" class="profile__imgNo--input" name="imgNo" checked id=${i} />
+                <div class="circle" ></div>
+              </label>; -->
+            </div>
           </div>
         </div>
         <div class="profile__content">

@@ -41,8 +41,6 @@ renderAttraction(attractionID).then((data) => {
   });
 });
 
-// --------------------render image No. circle--------------------
-
 // --------------------redirect to home page--------------------
 
 let webTilte = document.querySelector(".header__title");
@@ -75,6 +73,8 @@ bookingBtn.addEventListener("click", (e) => {
   let date = document.querySelector("input#date").value;
   if (!date) {
     let dateAlert = document.querySelector(".form__alert");
+    let formTag = document.querySelector(".profile__content--form");
+    formTag.style.height = "322px";
     dateAlert.style.display = "block";
   } else {
     let bookingData = {
@@ -111,7 +111,11 @@ async function renderAttraction(attractionID) {
   document.querySelector(".info__address").innerHTML = data.data.address;
   document.querySelector(".info__traffic").innerHTML = data.data.transport;
 
-  // 渲染所有圖片並只顯示第一張
+  // 渲染所有圖片並只顯示第一張，只渲染最多10張
+
+  if (data.data.images.length > 11) {
+    data.data.images.splice(11);
+  }
   let imgBox = document.querySelector("div.profile__image-box");
   for (let i = 0; i < data.data.images.length; i++) {
     let zIndex = 1;
