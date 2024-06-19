@@ -17,19 +17,23 @@ class User {
   }
   async getCurrentUser() {
     if (localStorage.getItem("user_token")) {
-      url = "/api/user/auth";
-      let response = await fetch(url, {
-        method: "GET",
-        headers: {
-          Authorization: "Bearer " + localStorage.getItem("user_token"),
-        },
-      });
-      let data = await response.json();
-      //特殊修改token或是過期的情況
-      if (data.error) {
-        this.logout();
-      } else {
-        this.login(data.data.name, data.data.email, data.data.id);
+      try {
+        url = "/api/user/auth";
+        let response = await fetch(url, {
+          method: "GET",
+          headers: {
+            Authorization: "Bearer " + localStorage.getItem("user_token"),
+          },
+        });
+        let data = await response.json();
+        //特殊修改token或是過期的情況
+        if (data.error) {
+          this.logout();
+        } else {
+          this.login(data.data.name, data.data.email, data.data.id);
+        }
+      } catch (error) {
+        console.error("沒抓到/api/user/auth的資料", error);
       }
     }
   }
@@ -184,47 +188,56 @@ document.querySelector(".popup__form--send").addEventListener("click", (e) => {
 
     if (popUp.isSignInForm) {
       // 登入操作
-      let url = "/api/user/auth";
-      fetch(url, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-      })
-        .then((response) => {
-          return response.json();
+      try {
+        let url = "/api/user/auth";
+        fetch(url, {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(data),
         })
-        .then((data) => {
-          if (data.error) {
-            renderFormMessage(data.message);
-          } else {
-            localStorage.setItem("user_token", data.token);
-            location.reload();
-          }
-        });
+          .then((response) => {
+            return response.json();
+          })
+          .then((data) => {
+            if (data.error) {
+              renderFormMessage(data.message);
+            } else {
+              localStorage.setItem("user_token", data.token);
+              location.reload();
+            }
+          });
+      } catch (error) {
+        console.error("沒辦法登入/api/user/auth", error);
+      }
     } else {
       // 註冊操作
-      data.name = nameInput.value;
-      let url = "/api/user";
-      fetch(url, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-      })
-        .then((response) => {
-          return response.json();
+      try {
+        data.name = nameInput.value;
+        let url = "/api/user";
+        fetch(url, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(data),
         })
-        .then((data) => {
-          if (data.error) {
-            renderFormMessage(data.message);
-          } else {
-            document.querySelector(".popup__form--alert").id = "success-state";
-            renderFormMessage("註冊成功");
-          }
-        });
+          .then((response) => {
+            return response.json();
+          })
+          .then((data) => {
+            if (data.error) {
+              renderFormMessage(data.message);
+            } else {
+              document.querySelector(".popup__form--alert").id =
+                "success-state";
+              renderFormMessage("註冊成功");
+            }
+          });
+      } catch (error) {
+        console.error("沒辦法註冊/api/user", error);
+      }
     }
   } else {
     renderFormMessage(resultMessage);
