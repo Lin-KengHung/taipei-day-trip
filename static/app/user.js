@@ -59,7 +59,13 @@ function renderInit() {
   const popUpSection = `<section class="popup">
     <div class="popup__background">
       <div class="popup__form">
-        <div class="popup__form--decorateor-bar"></div>
+        <div class="popup__form--decorateor-bar">
+              <img
+              class="popup__form--close"
+              src="/static/images/close.png"
+              alt="close"
+            />
+        </div>
         <div class="popup__form--content">
           <h3 class="popup__form--title bold">登入會員帳號</h3>
           <input
@@ -100,18 +106,15 @@ function renderInit() {
 }
 class PopupMenuState {
   constructor() {
-    this.isShowing = false;
     this.isSignInForm = true;
     this.element = document.querySelector(".popup");
   }
 
   hide() {
     this.element.style.display = "none";
-    this.isShowing = false;
   }
   show() {
     this.element.style.display = "block";
-    this.isShowing = true;
   }
 }
 function renderForm(format) {
@@ -157,12 +160,13 @@ document.querySelector(".header__btn--user").addEventListener("click", (e) => {
     // 登出
     user.logout();
   } else {
-    if (popUp.isShowing) {
-      popUp.hide();
-    } else {
-      popUp.show();
-    }
+    popUp.show();
   }
+});
+
+// listen form close btn
+document.querySelector(".popup__form--close").addEventListener("click", (e) => {
+  popUp.hide();
 });
 // listen switch signin / signup btn
 document
