@@ -14,30 +14,20 @@ renderAttraction(attractionID).then((data) => {
     });
   });
   // --------------------update showing image when click arrow button--------------------
-  let rightBtn = document.querySelector("img.profile__arrow-btn--right");
-  rightBtn.addEventListener("click", (e) => {
-    let newImgID;
-    if (showingImgID == data.images.length - 1) {
-      newImgID = 0;
-    } else {
-      newImgID = Number(showingImgID) + 1;
-    }
 
-    renderNewImg(newImgID);
-    let circle = document.getElementById(showingImgID);
-    circle.checked = true;
-  });
-  let leftBtn = document.querySelector("img.profile__arrow-btn--left");
-  leftBtn.addEventListener("click", (e) => {
-    let newImgID;
-    if (showingImgID == 0) {
-      newImgID = data.images.length - 1;
-    } else {
-      newImgID = Number(showingImgID) - 1;
-    }
-    renderNewImg(newImgID);
-    let circle = document.getElementById(showingImgID);
-    circle.checked = true;
+  let arrowBtns = document.querySelectorAll(".profile__arrow-btn");
+  arrowBtns.forEach((btn) => {
+    btn.addEventListener("click", (e) => {
+      let newImgID;
+      if (btn.id === "right") {
+        newImgID = (showingImgID + 1) % data.images.length;
+      } else {
+        newImgID = (showingImgID + data.images.length - 1) % data.images.length;
+      }
+      renderNewImg(newImgID);
+      let circle = document.getElementById(showingImgID);
+      circle.checked = true;
+    });
   });
 });
 
