@@ -11,6 +11,8 @@ from fastapi import Request
 ## .env
 load_dotenv()
 password = os.getenv("PASSWORD")
+secret = os.getenv("SECRET")
+
 
 
 ## connect to MySQL
@@ -36,7 +38,7 @@ class CustomizeRaise(Exception):
         self.message = message
 
 ## JWT
-SECRET_KEY = "secret"
+SECRET_KEY = secret
 ALGORITHM = "HS256"
 expire = datetime.datetime.now() + datetime.timedelta(days=7)
 
