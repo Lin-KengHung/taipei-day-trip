@@ -1,0 +1,165 @@
+body main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0 10px;
+}
+body main .booking {
+  margin-top: 40px;
+  width: 100%;
+  max-width: 1000px;
+}
+body main .booking__welcome {
+  width: 100%;
+  height: 27px;
+  color: #666666;
+}
+body main .booking__profile {
+  width: 100%;
+  max-width: 980px;
+  height: auto;
+  margin-top: 30px;
+  padding-left: 10px;
+  display: flex;
+  gap: 30px;
+}
+body main .booking__profile--img {
+  width: 250px;
+  height: 200px;
+}
+body main .booking__profile--img img {
+  width: 100%;
+  height: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+body main .booking__profile--infor {
+  flex-grow: 1;
+  position: relative;
+  height: 200px;
+}
+body main .booking__profile--infor .infor__title {
+  color: #448899;
+}
+body main .booking__profile--title {
+  color: #448899;
+  line-height: 24px;
+  margin-bottom: 20px;
+}
+body main .booking__profile--content {
+  color: #666666;
+  line-height: 24px;
+  margin-bottom: 10px;
+}
+body main .booking__profile .infor__data {
+  margin-left: 5px;
+  font-weight: 400;
+}
+body main .booking__delete-icon {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+body main .booking__delete-icon:hover {
+  cursor: pointer;
+}
+body main .form {
+  width: 100%;
+  max-width: 1200px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+body main .contact {
+  width: 100%;
+  max-width: 980px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+body main .contact__title {
+  color: #666666;
+  line-height: 24px;
+  margin-bottom: 20px;
+}
+body main .contact__input {
+  margin-bottom: 15px;
+}
+body main .contact__input--subtitle {
+  color: #666666;
+  font-weight: 400;
+}
+body main .contact__input input {
+  width: 200px;
+  height: 38px;
+  padding: 10px;
+  border: 1px solid #e8e8e8;
+  border-radius: 5px;
+}
+body main .contact__notice {
+  width: 100%;
+  color: #666666;
+  line-height: 24px;
+}
+body main .payment {
+  width: 100%;
+  max-width: 980px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 15px;
+}
+body main .payment__title {
+  width: 100%;
+  height: 24px;
+  color: #666666;
+  margin-bottom: 5px;
+}
+body main .payment__input--subtitle {
+  color: #666666;
+  font-weight: 400;
+}
+body main .payment__input input {
+  border: 1px solid #e8e8e8;
+  border-radius: 5px;
+  padding: 10px;
+}
+body main .confirm {
+  width: 100%;
+  max-width: 980px;
+  height: 100px;
+  display: flex;
+  flex-direction: column;
+  align-items: end;
+  margin-bottom: 40px;
+}
+body main .confirm__total-price {
+  line-height: 20px;
+  color: #666666;
+}
+body main .confirm__btn {
+  width: 173px;
+  height: 36px;
+  margin: 22px 0;
+  background-color: #448899;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 5px;
+}
+
+@media screen and (max-width: 600px) {
+  body main .booking__profile {
+    flex-direction: column;
+    padding-left: 0;
+  }
+  body main .booking__profile--img {
+    width: 100%;
+  }
+  body main .booking__delete-icon {
+    top: auto;
+    bottom: 0;
+  }
+  body main .separator-top {
+    margin-top: 30px;
+  }
+}/*# sourceMappingURL=booking.css.map */

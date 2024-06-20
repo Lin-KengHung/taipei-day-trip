@@ -1,8 +1,9 @@
 from fastapi import *
-from pydantic import BaseModel, EmailStr, Field
+from pydantic import BaseModel, field_validator, Field
 from . import connection_pool, Error, Success, make_JWT, JWTBearer
 from fastapi.responses import JSONResponse
 import bcrypt
+import re
 
 
 router = APIRouter(
@@ -15,18 +16,26 @@ security = JWTBearer()
 class User(BaseModel):
     id: int
     name: str
-    email: EmailStr
+    email: str
+    
 
 class UserOut(BaseModel):
     data: User
     
 class UserSignUpInput(BaseModel):
     name: str
-    email: EmailStr
+    email: str
     password: str
 
+    @field_validator("email")
+    def email_match(cls, v: str):
+        email_pattern = r"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
+        if not re.match(email_pattern, v):
+            raise ValueError("Email格式不正確")
+        return v
+
 class UserSignInInput(BaseModel):
-    email: EmailStr
+    email: str
     password: str
 
 class Token(BaseModel):
@@ -38,7 +47,6 @@ class Token(BaseModel):
 async def signup(user: UserSignUpInput):
     connect = connection_pool.get_connection()
     mycursor = connect.cursor(dictionary=True)
-    ## Verify if the input conforms to the defined format
 
     ## Verify if the email has existed in database
     mycursor.execute("SELECT 1 FROM user WHERE email = %s LIMIT 1", (user.email,))
@@ -56,7 +64,7 @@ async def signup(user: UserSignUpInput):
     return Success(ok=True)
 
 @router.put("/user/auth", summary="登入會員帳戶", response_model=Token, responses={400:{"model":Error}})
-async def signup(user: UserSignInInput):
+async def signin(user: UserSignInInput):
     connect = connection_pool.get_connection()
     mycursor = connect.cursor(dictionary=True)
 
@@ -77,7 +85,7 @@ async def signup(user: UserSignInInput):
     return Token(token=token)
 
 @router.get("/user/auth",  summary="取得當前登入的會員資訊", response_model=UserOut)
-async def signup(payload =  Depends(security)):
+async def get_user(payload =  Depends(security)):
     return UserOut(data=User(id=payload["id"], name=payload["name"], email=payload["email"]))
 
 

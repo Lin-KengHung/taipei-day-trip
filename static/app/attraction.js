@@ -1,8 +1,10 @@
-// --------------------render main page--------------------
 const href = location.href;
 const pattern = /^http:.+\/attraction\/(\d+)$/;
 const attractionID = href.match(pattern)[1];
+let time = "morning";
+let price = 2000;
 let showingImgID = 0;
+// --------------------render main page--------------------
 renderAttraction(attractionID).then((data) => {
   // --------------------update showing image when click img NO. circle--------------------
   let imageCircles = document.querySelectorAll("input.profile__imgNo--input");
@@ -39,8 +41,6 @@ renderAttraction(attractionID).then((data) => {
   });
 });
 
-// --------------------render image No. circle--------------------
-
 // --------------------redirect to home page--------------------
 
 let webTilte = document.querySelector(".header__title");
@@ -51,17 +51,42 @@ webTilte.addEventListener("click", (e) => {
 // --------------------change price--------------------
 
 let timeRadioInputs = document.querySelectorAll('input[name="time"]');
-let price = document.querySelector("span#price");
-timeRadioInputs.forEach((time) => {
-  time.addEventListener("change", (e) => {
-    if (time.id == "morning") {
-      price.innerHTML = 2000;
+let priceTag = document.querySelector("span#price");
+timeRadioInputs.forEach((timeBtn) => {
+  timeBtn.addEventListener("change", (e) => {
+    if (timeBtn.id == "morning") {
+      price = 2000;
+      time = "morning";
     } else {
-      price.innerHTML = 2500;
+      price = 2500;
+      time = "afternoon";
     }
+    priceTag.innerHTML = price;
   });
 });
 
+// --------------------send booking information to back-end--------------------
+
+let bookingBtn = document.querySelector("button.form__btn");
+bookingBtn.addEventListener("click", (e) => {
+  e.preventDefault();
+  let date = document.querySelector("input#date").value;
+  if (!date) {
+    let dateAlert = document.querySelector(".form__alert");
+    let formTag = document.querySelector(".profile__content--form");
+    formTag.style.height = "322px";
+    dateAlert.style.display = "block";
+  } else {
+    let bookingData = {
+      attractionId: Number(attractionID),
+      date: date,
+      time: time,
+      price: price,
+    };
+
+    sendBookingData(bookingData);
+  }
+});
 // --------------------function part--------------------
 
 async function renderAttraction(attractionID) {
@@ -86,7 +111,11 @@ async function renderAttraction(attractionID) {
   document.querySelector(".info__address").innerHTML = data.data.address;
   document.querySelector(".info__traffic").innerHTML = data.data.transport;
 
-  // 渲染所有圖片並只顯示第一張
+  // 渲染所有圖片並只顯示第一張，只渲染最多10張
+
+  if (data.data.images.length > 11) {
+    data.data.images.splice(11);
+  }
   let imgBox = document.querySelector("div.profile__image-box");
   for (let i = 0; i < data.data.images.length; i++) {
     let zIndex = 1;
@@ -140,4 +169,17 @@ function renderNewImg(newImgID) {
     newImg.style.opacity = 1;
     showingImgID = Number(newImgID);
   }
+}
+
+async function sendBookingData(bookingData) {
+  let response = await fetch("/api/booking", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(bookingData),
+  });
+  let result = await response.json();
+  console.log(result);
+  return result;
 }

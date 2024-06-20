@@ -63,6 +63,12 @@ body main .profile__imgNo {
   position: absolute;
   bottom: 10px;
   z-index: 3;
+  overflow-x: hidden;
+  overflow-x: scroll;
+  scroll-behavior: smooth;
+}
+body main .profile__imgNo::-webkit-scrollbar {
+  display: none;
 }
 body main .profile__imgNo .circle {
   background-color: white;
@@ -96,7 +102,7 @@ body main .profile__content h3 {
 }
 body main .profile__content--form {
   width: 100%;
-  height: 302px;
+  height: 300px;
   background-color: #e8e8e8;
   margin-bottom: 8px;
   border-radius: 5px;
@@ -170,6 +176,23 @@ body main .profile__content--form .form__option--cost {
   display: flex;
   gap: 5px;
 }
+body main .profile__content--form .form__alert {
+  display: flex;
+  align-items: center;
+  display: none;
+  width: 279px;
+  margin: 10px 0px;
+  font-size: 12px;
+  color: black;
+  background-color: #ffbd9b;
+  opacity: 0.9;
+  border-radius: 5px;
+}
+body main .profile__content--form .form__alert img {
+  margin: 0 5px;
+  width: 12px;
+  height: 12px;
+}
 body main .profile__content--form .form__btn {
   background-color: #448899;
   color: white;
@@ -182,14 +205,8 @@ body main .profile__content--cat-mrt {
   display: flex;
   align-items: center;
 }
-body main .separator {
-  margin-top: 40px;
-  width: 100%;
-  max-width: 1200px;
-  border-top: 1px solid #e8e8e8;
-}
 body main .info {
-  margin: 40px 0;
+  margin-bottom: 40px;
   width: 100%;
   max-width: 1200px;
   padding: 10px;
