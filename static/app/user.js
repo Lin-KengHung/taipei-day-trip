@@ -9,7 +9,6 @@ class User {
     this.name = name;
     this.email = email;
     this.id = id;
-    document.querySelector(".header__btn--user").innerText = "登出系統";
   }
   logout() {
     localStorage.removeItem("user_token");
@@ -17,6 +16,7 @@ class User {
   }
   async getCurrentUser() {
     if (localStorage.getItem("user_token")) {
+      document.querySelector(".header__btn--user").innerText = "登出系統";
       try {
         url = "/api/user/auth";
         let response = await fetch(url, {
