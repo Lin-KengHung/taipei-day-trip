@@ -69,6 +69,7 @@ async def get_booking_data(payload =  Depends(security)):
 
 @router.post("/booking", summary="建立新的預定行程", response_model=Success, responses={400:{"model":Error}})
 async def submit_new_booking(data: BookingInput,  payload =  Depends(security)):
+    print("提交booking data")
     connect = connection_pool.get_connection()
     mycursor = connect.cursor(dictionary=True)
     # check booking date is after today

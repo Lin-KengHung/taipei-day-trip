@@ -2,7 +2,6 @@
 class User {
   constructor() {
     this.isLogin = false;
-    this.getCurrentUser();
   }
   login(name, email, id) {
     this.isLogin = true;
@@ -18,7 +17,7 @@ class User {
     if (localStorage.getItem("user_token")) {
       document.querySelector(".header__btn--user").innerText = "登出系統";
       try {
-        url = "/api/user/auth";
+        let url = "/api/user/auth";
         let response = await fetch(url, {
           method: "GET",
           headers: {
@@ -36,6 +35,11 @@ class User {
         console.error("沒抓到/api/user/auth的資料", error);
       }
     }
+  }
+  static async createUser() {
+    let user = new User();
+    await user.getCurrentUser();
+    return user;
   }
 }
 function verifyInputFormat() {
@@ -152,7 +156,8 @@ let nameInput = document.querySelector(".popup__form--name");
 
 // instance popUP obj and user obj
 let popUp = new PopupMenuState();
-let user = new User();
+let user = await User.createUser();
+export default user;
 
 // listen login/logout btn
 document.querySelector(".header__btn--user").addEventListener("click", (e) => {
@@ -182,7 +187,7 @@ document
   });
 // listen sending data btn and send data
 document.querySelector(".popup__form--send").addEventListener("click", (e) => {
-  resultMessage = verifyInputFormat();
+  let resultMessage = verifyInputFormat();
   document.querySelector(".popup__form--alert").id = "error-state";
   if (resultMessage === "ok") {
     let data = {
@@ -246,4 +251,11 @@ document.querySelector(".popup__form--send").addEventListener("click", (e) => {
   } else {
     renderFormMessage(resultMessage);
   }
+});
+
+// --------------------redirect to home page--------------------
+
+let webTilte = document.querySelector(".header__title");
+webTilte.addEventListener("click", (e) => {
+  location.href = "/";
 });

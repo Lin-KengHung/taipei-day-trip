@@ -31,13 +31,6 @@ renderAttraction(attractionID).then((data) => {
   });
 });
 
-// --------------------redirect to home page--------------------
-
-let webTilte = document.querySelector(".header__title");
-webTilte.addEventListener("click", (e) => {
-  location.href = "/";
-});
-
 // --------------------change price--------------------
 
 let timeRadioInputs = document.querySelectorAll('input[name="time"]');
@@ -73,8 +66,8 @@ bookingBtn.addEventListener("click", (e) => {
       time: time,
       price: price,
     };
-
     sendBookingData(bookingData);
+    location.href = "/booking";
   }
 });
 // --------------------function part--------------------
@@ -166,6 +159,7 @@ async function sendBookingData(bookingData) {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
+      Authorization: "Bearer " + localStorage.getItem("user_token"),
     },
     body: JSON.stringify(bookingData),
   });
