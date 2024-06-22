@@ -253,9 +253,15 @@ document.querySelector(".popup__form--send").addEventListener("click", (e) => {
   }
 });
 
-// --------------------redirect to home page--------------------
-
+// redirect to home page
 let webTilte = document.querySelector(".header__title");
 webTilte.addEventListener("click", (e) => {
   location.href = "/";
 });
+
+// redirect to booking page
+document
+  .querySelector(".header__btn--booking")
+  .addEventListener("click", (e) => {
+    location.href = "/booking";
+  });

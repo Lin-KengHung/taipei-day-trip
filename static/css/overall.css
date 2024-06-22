@@ -102,9 +102,6 @@ body .header__btn {
   color: #666666;
   padding: 10px;
 }
-body main {
-  min-height: calc(100vh - 158px);
-}
 body main .separator {
   margin: 40px 0;
   width: 100%;
@@ -113,13 +110,17 @@ body main .separator {
 }
 body footer {
   width: 100%;
-  height: 104px;
+  min-height: 104px;
   background-color: #666666;
   display: flex;
   align-items: center;
   justify-content: center;
+  position: relative;
 }
 body footer p {
+  position: absolute;
+  top: 40px;
+  line-height: 24px;
   color: #ffffff;
 }
 body .popup {
