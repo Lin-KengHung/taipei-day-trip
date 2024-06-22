@@ -49,7 +49,7 @@ async def signup(user: UserSignUpInput):
     mycursor = connect.cursor(dictionary=True)
 
     ## Verify if the email has existed in database
-    mycursor.execute("SELECT 1 FROM user WHERE email = %s LIMIT 1", (user.email,))
+    mycursor.execute("SELECT 1 FROM user WHERE email = %s", (user.email,))
     exist = mycursor.fetchone()
     if exist:
         return JSONResponse(status_code=400, content=Error(message="Email已經註冊過").model_dump())
@@ -69,7 +69,7 @@ async def signin(user: UserSignInInput):
     mycursor = connect.cursor(dictionary=True)
 
     ## Verify if user email exist
-    mycursor.execute("SELECT * FROM user WHERE email = %s LIMIT 1", (user.email,))
+    mycursor.execute("SELECT * FROM user WHERE email = %s", (user.email,))
     current_user = mycursor.fetchone()
     if current_user is None:
         return JSONResponse(status_code=400, content=Error(message="此email不存在").model_dump())
