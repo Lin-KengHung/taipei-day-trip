@@ -1,4 +1,4 @@
-import user from "./user.js";
+import { user } from "./user.js";
 // Model
 async function init() {
   try {
@@ -41,19 +41,26 @@ async function deleteSchedule() {
 }
 // View
 function renderMain(data) {
+  console.log(data);
   document.querySelector(".welcome__username").innerHTML = user.name;
   document.querySelector(".infor__data--attraction-name").innerHTML =
     data.attraction.name;
   document.querySelector(".infor__data--date").innerHTML = data.date;
+  const time = document.querySelector(".infor__data--time");
+  if (data.time === "morning") {
+    time.innerHTML = "08:00-12:00";
+  } else {
+    time.innerHTML = "14:00-18:00";
+  }
   document.querySelector(".infor__data--cost").innerHTML = data.price;
   document.querySelector(".infor__data--address").innerHTML =
     data.attraction.address;
   document.querySelector(".booking__profile--img").src = data.attraction.image;
   document.querySelector(".contact__input--name").placeholder = user.name;
   document.querySelector(".contact__input--email").placeholder = user.email;
+  console.log(data.price);
   document.querySelector(".confirm__total--cost").innerHTML = data.price;
 }
-
 function renderNoBooking() {
   document.querySelector(".welcome__username").innerHTML = user.name;
   document.querySelector("main").style.display = "none";
@@ -62,6 +69,7 @@ function renderNoBooking() {
   footer.style.height =
     window.innerHeight - footer.getBoundingClientRect().top + "px";
 }
+
 // Controller
 init();
 

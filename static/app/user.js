@@ -119,6 +119,10 @@ class PopupMenuState {
   }
   show() {
     this.element.style.display = "block";
+    if (!this.isSignInForm) {
+      renderForm("signin");
+      popUp.isSignInForm = true;
+    }
   }
 }
 function renderForm(format) {
@@ -157,7 +161,7 @@ let nameInput = document.querySelector(".popup__form--name");
 // instance popUP obj and user obj
 let popUp = new PopupMenuState();
 let user = await User.createUser();
-export default user;
+export { user, popUp };
 
 // listen login/logout btn
 document.querySelector(".header__btn--user").addEventListener("click", (e) => {
@@ -263,5 +267,9 @@ webTilte.addEventListener("click", (e) => {
 document
   .querySelector(".header__btn--booking")
   .addEventListener("click", (e) => {
-    location.href = "/booking";
+    if (user.isLogin) {
+      location.href = "/booking";
+    } else {
+      popUp.show();
+    }
   });

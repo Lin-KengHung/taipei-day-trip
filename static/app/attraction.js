@@ -1,3 +1,4 @@
+import { user, popUp } from "./user.js";
 const href = location.href;
 const pattern = /^http:.+\/attraction\/(\d+)$/;
 const attractionID = href.match(pattern)[1];
@@ -59,6 +60,8 @@ bookingBtn.addEventListener("click", (e) => {
     let formTag = document.querySelector(".profile__content--form");
     formTag.style.height = "322px";
     dateAlert.style.display = "block";
+  } else if (!user.isLogin) {
+    popUp.show();
   } else {
     let bookingData = {
       attractionId: Number(attractionID),
@@ -74,9 +77,9 @@ bookingBtn.addEventListener("click", (e) => {
 
 async function renderAttraction(attractionID) {
   // fetch data
-  url = "/api/attraction/" + attractionID;
-  let response = await fetch(url, { method: "GET" });
-  let data = await response.json();
+  const url = "/api/attraction/" + attractionID;
+  const response = await fetch(url, { method: "GET" });
+  const data = await response.json();
   checkAttractionData(data);
 
   // 渲染主要頁面
@@ -167,3 +170,20 @@ async function sendBookingData(bookingData) {
   console.log(result);
   return result;
 }
+
+// 避免選到之前的日期
+(function () {
+  const fulldate = new Date();
+  const year = fulldate.getFullYear();
+  const month =
+    fulldate.getMonth() + 1 < 10
+      ? "0" + (fulldate.getMonth() + 1)
+      : fulldate.getMonth() + 1;
+  const date =
+    fulldate.getDate() + 1 < 10
+      ? "0" + (fulldate.getDate() + 1)
+      : fulldate.getDate() + 1;
+  document
+    .querySelector("input#date")
+    .setAttribute("min", `${year}-${month}-${date}`);
+})();
