@@ -32,10 +32,6 @@ class Error(BaseModel):
 class Success(BaseModel):
     ok: bool = True
 
-class CustomizeRaise(Exception):
-    def __init__(self, status_code, message):
-        self.status_code = status_code
-        self.message = message
 
 ## JWT
 SECRET_KEY = secret

@@ -3,7 +3,7 @@ from pydantic import BaseModel, Field
 from typing import List, Optional, Union, Dict
 from . import connection_pool, Error
 from fastapi.responses import JSONResponse
-
+from model.attraction import AttractionModel
 
 
 
@@ -32,27 +32,12 @@ class DataOut(BaseModel):
     
 
 
-@router.get("/attractions", response_model=AttractionOut , summary="取得景點資料列表", description="取得不同分頁的旅遊景點列表資料，也可以根據標題關鍵字、或捷運站名稱篩選", tags=["Attraction"])
+@router.get("/attractions" , summary="取得景點資料列表", description="取得不同分頁的旅遊景點列表資料，也可以根據標題關鍵字、或捷運站名稱篩選", tags=["Attraction"])
 async def get_attraction_data_list(page: int = Query(..., ge=0, description="要取得的分頁，每頁 12 筆資料"), keyword: str  =  Query(default="", description="用來完全比對捷運站名稱、或模糊比對景點名稱的關鍵字，沒有給定則不做篩選")):
-    connect = connection_pool.get_connection()
-    mycursor = connect.cursor(dictionary=True)
+    # response_model=AttractionOut 
 
-    keyword = '%' + keyword + '%'
-    # get query total row
-    mycursor.execute("SELECT COUNT(*) FROM attraction WHERE name LIKE %s or mrt LIKE %s", (keyword, keyword))
-    tot_raw = mycursor.fetchone()["COUNT(*)"]
-    # get attraction data
-    mycursor.execute("SELECT * FROM attraction WHERE name LIKE %s or mrt LIKE %s LIMIT %s, %s", (keyword, keyword, page * 12, 12))
-    attractions_list = mycursor.fetchall()
-    # get image url of needed attractions
-    mycursor.execute("SELECT a.id, i.url FROM (SELECT id FROM attraction WHERE name LIKE %s or mrt LIKE %s LIMIT %s, %s) AS a JOIN image AS i ON a.id = i.attraction_id", (keyword, keyword, page * 12, 12))
-    images_list = mycursor.fetchall()
-
-    data_list = make_Attraction_schema(attractions_list, images_list)
-    nextPage = page + 1 if page * 12 + 12 < tot_raw else None
+    nextPage, data_list = AttractionModel.get_attraction_data_list(page, keyword)
     response = AttractionOut(nextPage=nextPage, data=data_list)
-    mycursor.close()
-    connect.close()
     return response
 
 
