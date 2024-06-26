@@ -41,7 +41,6 @@ async function deleteSchedule() {
 }
 // View
 function renderMain(data) {
-  console.log(data);
   document.querySelector(".welcome__username").innerHTML = user.name;
   document.querySelector(".infor__data--attraction-name").innerHTML =
     data.attraction.name;
@@ -58,7 +57,6 @@ function renderMain(data) {
   document.querySelector(".booking__profile--img").src = data.attraction.image;
   document.querySelector(".contact__input--name").placeholder = user.name;
   document.querySelector(".contact__input--email").placeholder = user.email;
-  console.log(data.price);
   document.querySelector(".confirm__total--cost").innerHTML = data.price;
 }
 function renderNoBooking() {

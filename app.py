@@ -1,7 +1,7 @@
 from fastapi import *
 from fastapi.responses import FileResponse, JSONResponse
 from router import attraction, user, booking
-from router import Error
+from model.share import Error
 from model.user import CustomizeRaise
 from fastapi.staticfiles import StaticFiles
 from fastapi.exceptions import RequestValidationError
