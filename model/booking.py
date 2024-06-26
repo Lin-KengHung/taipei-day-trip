@@ -19,7 +19,6 @@ class BookingOut(BaseModel):
 
 class BookingModel:
     def submit_new_booking(userId:int, attractionId:int , booking_date:date, time:str, price:str) -> bool | Error:
-        print(booking_date)
         # 確認時間在今天之後
         if BookingModel.check_date_after_today(booking_date) is False:
             return Error(message="不要活在過去，請放眼未來")
@@ -39,7 +38,8 @@ class BookingModel:
                 time = VALUES(time),
                 price = VALUES(price);
             """
-        val = (attractionId, userId, booking_date, time, price)
+
+        val = (attractionId, userId, str(booking_date), time, price)
         result = Database.create(sql, val)
 
 

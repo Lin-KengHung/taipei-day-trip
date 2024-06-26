@@ -63,16 +63,14 @@ bookingBtn.addEventListener("click", (e) => {
   } else if (!user.isLogin) {
     popUp.show();
   } else {
-    console.log(date);
     let bookingData = {
       attractionId: Number(attractionID),
       date: date,
       time: time,
       price: price,
     };
-    console.log(bookingData);
-    // sendBookingData(bookingData);
-    // location.href = "/booking";
+    sendBookingData(bookingData);
+    location.href = "/booking";
   }
 });
 // --------------------function part--------------------
