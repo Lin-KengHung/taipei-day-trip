@@ -1,7 +1,11 @@
 from dbconfig import Database
-from pydantic import BaseModel
-from typing import List
+from model.share import Error
+from pydantic import BaseModel, Field
+from typing import Optional
+import json
 
+
+# ---------- View ----------
 class Attraction(BaseModel):
 	id: int 
 	name: str 
@@ -12,39 +16,63 @@ class Attraction(BaseModel):
 	mrt: str | None = None
 	lat: float
 	lng: float
-	images: List[str]
-     
+	images: list[str]
+class AttractionListOut(BaseModel):
+     nextPage: Optional[int] = Field(None, gt=0)
+     data: list[Attraction]
+class AttractionSingleOut(BaseModel):
+    data: Attraction
+class MrtsOut(BaseModel):
+    data: list
+
+# ---------- Core model  ----------
 class AttractionModel:
 
-    def get_attraction_data_list(page: int, keyword: str =""):
-
+     def get_attraction_data_list(page: int, keyword: str ="") -> AttractionListOut:
+        
+        ## 資料庫搜尋
         keyword = '%' + keyword + '%'
-        
-        # get query total row
-        result = Database.read("SELECT COUNT(*) FROM attraction WHERE name LIKE %s or mrt LIKE %s", (keyword, keyword))[0]
-        tot_raw = result["COUNT(*)"]
-        
-        # get attraction data
-        attractions_list = Database.read("SELECT * FROM attraction WHERE name LIKE %s or mrt LIKE %s LIMIT %s, %s", (keyword, keyword, page * 12, 12))
-        # get image url of needed attractions
-        images_list = Database.read("SELECT a.id, i.url FROM (SELECT id FROM attraction WHERE name LIKE %s or mrt LIKE %s LIMIT %s, %s) AS a JOIN image AS i ON a.id = i.attraction_id", (keyword, keyword, page * 12, 12))
+        sql = "SELECT a.*, JSON_ARRAYAGG(i.url) AS images FROM attraction a LEFT JOIN image i ON a.id = i.attraction_id WHERE name LIKE %s or mrt LIKE %s GROUP BY a.id LIMIT %s, %s;"
+        val = (keyword, keyword, page * 12, 13)
+        attractions_list = Database.read_all(sql, val)
 
-        data_list = AttractionModel.make_Attraction_schema(attractions_list, images_list)
-        nextPage = page + 1 if page * 12 + 12 < tot_raw else None
+        ## 資料格式處裡
+        for attraction in attractions_list:
+             attraction["images"] = json.loads(attraction["images"])
+             attraction = Attraction(**attraction)
+        
+        ## 判斷有沒有下一頁
+        if (len(attractions_list) == 13):
+             nextPage = page + 1
+             attractions_list.pop()
+        else:
+             nextPage = None
 
-        return [nextPage, data_list]
+        return AttractionListOut(nextPage=nextPage, data=attractions_list)
     
-    def make_Attraction_schema(attraction_list, image_list):
-     # image list vertical integrate
-        id2image_list = {}
-        for image in image_list:
-            id = image["id"]
-            if id not in id2image_list:
-                id2image_list[id] = []
-            id2image_list[id].append(image["url"])
-        # make data list with Attraction schema
-        data_list = []
-        for attraction in attraction_list:
-            attraction["images"] = id2image_list[attraction["id"]]
-            data_list.append(Attraction(**attraction))
-        return data_list
+     def get_attraction_data_by_id(id) -> AttractionSingleOut | Error:
+
+        ## 資料搜尋
+        sql = "SELECT a.*, JSON_ARRAYAGG(i.url) AS images FROM attraction a LEFT JOIN image i ON a.id = i.attraction_id WHERE a.id = %s GROUP BY a.id"
+        val = (id,)
+        attraction = Database.read_one(sql, val)
+
+        ## 錯誤ID狀況
+        if not attraction:
+             return Error(message="景點編號不正確")
+        
+        ## 資料處裡
+        attraction["images"] = json.loads(attraction["images"])
+
+        return AttractionSingleOut(data=Attraction(**attraction))
+
+     def get_mrts_list() -> MrtsOut:
+
+          # 查詢資料庫
+          sql = "SELECT mrt FROM attraction WHERE mrt IS NOT NULL GROUP BY mrt ORDER BY count(*) DESC"
+          raw_mrt_list = Database.read_all(sql)
+
+          # 資料格式處裡
+          mrt_list = list(map(lambda x: x["mrt"], raw_mrt_list))
+
+          return MrtsOut(data=mrt_list)

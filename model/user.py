@@ -1,6 +1,8 @@
 from dbconfig import Database
+from model.share import Error
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from fastapi import Request
+from pydantic import BaseModel, Field
 import bcrypt
 import jwt
 import datetime
@@ -9,9 +11,20 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
+# ---------- View ----------
+class User(BaseModel):
+    id: int
+    name: str
+    email: str   
+class UserOut(BaseModel):
+    data: User
+class Token(BaseModel):
+    token: str = Field(description="包含JWT加密字串")
+
+# ---------- Core user behavior model  ----------
 class UserModel:
     def check_email_exist(email: str) -> bool:
-        if (Database.read("SELECT 1 FROM user WHERE email = %s", (email,))):
+        if (Database.read_one("SELECT 1 FROM user WHERE email = %s", (email,))):
             return True
         else:
             return False
@@ -24,24 +37,24 @@ class UserModel:
         else:
             return False
         
-    def signin(email: str, password: str) -> str | bool:
-        current_user = Database.read("SELECT * FROM user WHERE email = %s", (email,))
+    def signin(email: str, password: str) -> Token | Error:
+        current_user = Database.read_one("SELECT * FROM user WHERE email = %s", (email,))
         if current_user is None:
-            return False
-        else:
-            current_user = current_user[0]
+            return Error(message="此email沒有註冊過")
+
         
         verification = bcrypt.checkpw(password.encode(), current_user["hash_password"].encode())
         if not verification:
-            return False
+            return Error(message="密碼輸入錯誤")
 
         token = make_JWT(id=current_user["id"], name=current_user["name"], email=current_user["email"])
-        return token
+        return Token(token=token)
 
 SECRET_KEY = os.getenv("SECRET")
 ALGORITHM = "HS256"
 expire = datetime.datetime.now() + datetime.timedelta(days=7)
 
+# ---------- Core JWT validation model  ----------
 class CustomizeRaise(Exception):
     def __init__(self, status_code, message):
         self.status_code = status_code
@@ -71,6 +84,8 @@ class JWTBearer(HTTPBearer):
             return {}
         except jwt.InvalidTokenError:
             return {}       
+
+# ---------- something else  ----------
 
 def make_hash_password(password: str):
     salt = bcrypt.gensalt(rounds=12)

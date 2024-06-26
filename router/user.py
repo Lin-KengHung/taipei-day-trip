@@ -1,9 +1,9 @@
 from fastapi import *
-from pydantic import BaseModel, field_validator, Field
-from . import  Error, Success
+from pydantic import BaseModel, field_validator
 from fastapi.responses import JSONResponse
 import re
-from model.user import UserModel, JWTBearer
+from model.user import UserModel, JWTBearer, Token, User, UserOut
+from model.share import Error, Success
 
 
 router = APIRouter(
@@ -12,15 +12,7 @@ router = APIRouter(
 )
 security = JWTBearer()
 
-# ---------- View and data verification  ----------
-class User(BaseModel):
-    id: int
-    name: str
-    email: str   
-
-class UserOut(BaseModel):
-    data: User
-    
+# ---------- Data verification schema ----------
 class UserSignUpInput(BaseModel):
     name: str
     email: str
@@ -37,9 +29,6 @@ class UserSignInInput(BaseModel):
     email: str
     password: str
 
-class Token(BaseModel):
-    token: str = Field(description="包含JWT加密字串")
-
 # ---------- End point ----------
 
 @router.post("/user", summary="註冊一個新會員", response_model=Success, responses={400:{"model":Error}})
@@ -55,12 +44,13 @@ async def signup(user: UserSignUpInput):
 @router.put("/user/auth", summary="登入會員帳戶", response_model=Token, responses={400:{"model":Error}})
 async def signin(user: UserSignInInput):
     
-    token = UserModel.signin(email=user.email, password=user.password)
+    result = UserModel.signin(email=user.email, password=user.password)
     
-    if (token):
-        return Token(token=token)
-    else:
-        return JSONResponse(status_code=400, content=Error(message="email或密碼錯誤").model_dump())
+    if (isinstance(result, Token)):
+        return result
+    
+    if (isinstance(result, Error)):
+        return JSONResponse(status_code=400, content=result.model_dump())
 
 @router.get("/user/auth",  summary="取得當前登入的會員資訊", response_model=UserOut)
 async def get_user(payload =  Depends(security)):
