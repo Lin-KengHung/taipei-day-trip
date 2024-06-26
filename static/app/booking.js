@@ -41,6 +41,7 @@ async function deleteSchedule() {
 }
 // View
 function renderMain(data) {
+  document.querySelector("main").style.visibility = "visible";
   document.querySelector(".welcome__username").innerHTML = user.name;
   document.querySelector(".infor__data--attraction-name").innerHTML =
     data.attraction.name;

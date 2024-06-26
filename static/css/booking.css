@@ -33,6 +33,7 @@ body main {
   flex-direction: column;
   align-items: center;
   padding: 0 10px;
+  visibility: hidden;
 }
 body main .booking {
   width: 100%;
