@@ -2,39 +2,63 @@ $PrimaryColor: #448899;
 $SecondaryColor: #666666;
 
 body {
+  .welcome {
+    width: 100%;
+    margin-top: 40px;
+    min-height: 27px;
+    color: $SecondaryColor;
+    display: flex;
+    justify-content: center;
+
+    &__container {
+      width: 100%;
+      max-width: 1020px;
+      padding: 0 10px;
+      &--noBooking {
+        max-width: 1000px;
+      }
+    }
+  }
+  .empty {
+    margin: 30px 0 40px 0;
+    width: 100%;
+    display: none;
+    justify-content: center;
+
+    &__state {
+      width: 100%;
+      max-width: 1000px;
+      padding: 0 10px;
+      line-height: 24px;
+      color: $SecondaryColor;
+    }
+  }
   main {
+    margin-top: 30px;
     display: flex;
     flex-direction: column;
     align-items: center;
     padding: 0 10px;
+    visibility: hidden;
     .booking {
-      margin-top: 40px;
       width: 100%;
       max-width: 1000px;
-
-      &__welcome {
-        width: 100%;
-        height: 27px;
-        color: $SecondaryColor;
-      }
       &__profile {
         width: 100%;
         max-width: 980px;
         height: auto;
-        margin-top: 30px;
         padding-left: 10px;
         display: flex;
         gap: 30px;
 
-        &--img {
+        &--img-container {
           width: 250px;
           height: 200px;
-
-          img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-          }
+        }
+        &--img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
         }
         &--infor {
           flex-grow: 1;
@@ -141,7 +165,7 @@ body {
       flex-direction: column;
       align-items: end;
       margin-bottom: 40px;
-      &__total-price {
+      &__total {
         line-height: 20px;
         color: $SecondaryColor;
       }
@@ -165,7 +189,7 @@ body {
         &__profile {
           flex-direction: column;
           padding-left: 0;
-          &--img {
+          &--img-container {
             width: 100%;
           }
         }

@@ -2,14 +2,12 @@
 class User {
   constructor() {
     this.isLogin = false;
-    this.getCurrentUser();
   }
   login(name, email, id) {
     this.isLogin = true;
     this.name = name;
     this.email = email;
     this.id = id;
-    document.querySelector(".header__btn--user").innerText = "登出系統";
   }
   logout() {
     localStorage.removeItem("user_token");
@@ -17,8 +15,9 @@ class User {
   }
   async getCurrentUser() {
     if (localStorage.getItem("user_token")) {
+      document.querySelector(".header__btn--user").innerText = "登出系統";
       try {
-        url = "/api/user/auth";
+        let url = "/api/user/auth";
         let response = await fetch(url, {
           method: "GET",
           headers: {
@@ -36,6 +35,11 @@ class User {
         console.error("沒抓到/api/user/auth的資料", error);
       }
     }
+  }
+  static async createUser() {
+    let user = new User();
+    await user.getCurrentUser();
+    return user;
   }
 }
 function verifyInputFormat() {
@@ -115,6 +119,10 @@ class PopupMenuState {
   }
   show() {
     this.element.style.display = "block";
+    if (!this.isSignInForm) {
+      renderForm("signin");
+      popUp.isSignInForm = true;
+    }
   }
 }
 function renderForm(format) {
@@ -152,7 +160,8 @@ let nameInput = document.querySelector(".popup__form--name");
 
 // instance popUP obj and user obj
 let popUp = new PopupMenuState();
-let user = new User();
+let user = await User.createUser();
+export { user, popUp };
 
 // listen login/logout btn
 document.querySelector(".header__btn--user").addEventListener("click", (e) => {
@@ -182,7 +191,7 @@ document
   });
 // listen sending data btn and send data
 document.querySelector(".popup__form--send").addEventListener("click", (e) => {
-  resultMessage = verifyInputFormat();
+  let resultMessage = verifyInputFormat();
   document.querySelector(".popup__form--alert").id = "error-state";
   if (resultMessage === "ok") {
     let data = {
@@ -247,3 +256,20 @@ document.querySelector(".popup__form--send").addEventListener("click", (e) => {
     renderFormMessage(resultMessage);
   }
 });
+
+// redirect to home page
+let webTilte = document.querySelector(".header__title");
+webTilte.addEventListener("click", (e) => {
+  location.href = "/";
+});
+
+// redirect to booking page
+document
+  .querySelector(".header__btn--booking")
+  .addEventListener("click", (e) => {
+    if (user.isLogin) {
+      location.href = "/booking";
+    } else {
+      popUp.show();
+    }
+  });

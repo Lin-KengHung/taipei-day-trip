@@ -1,33 +1,57 @@
+body .welcome {
+  width: 100%;
+  margin-top: 40px;
+  min-height: 27px;
+  color: #666666;
+  display: flex;
+  justify-content: center;
+}
+body .welcome__container {
+  width: 100%;
+  max-width: 1020px;
+  padding: 0 10px;
+}
+body .welcome__container--noBooking {
+  max-width: 1000px;
+}
+body .empty {
+  margin: 30px 0 40px 0;
+  width: 100%;
+  display: none;
+  justify-content: center;
+}
+body .empty__state {
+  width: 100%;
+  max-width: 1000px;
+  padding: 0 10px;
+  line-height: 24px;
+  color: #666666;
+}
 body main {
+  margin-top: 30px;
   display: flex;
   flex-direction: column;
   align-items: center;
   padding: 0 10px;
+  visibility: hidden;
 }
 body main .booking {
-  margin-top: 40px;
   width: 100%;
   max-width: 1000px;
-}
-body main .booking__welcome {
-  width: 100%;
-  height: 27px;
-  color: #666666;
 }
 body main .booking__profile {
   width: 100%;
   max-width: 980px;
   height: auto;
-  margin-top: 30px;
   padding-left: 10px;
   display: flex;
   gap: 30px;
 }
-body main .booking__profile--img {
+body main .booking__profile--img-container {
   width: 250px;
   height: 200px;
 }
-body main .booking__profile--img img {
+body main .booking__profile--img {
   width: 100%;
   height: 100%;
   -o-object-fit: cover;
@@ -133,7 +157,7 @@ body main .confirm {
   align-items: end;
   margin-bottom: 40px;
 }
-body main .confirm__total-price {
+body main .confirm__total {
   line-height: 20px;
   color: #666666;
 }
@@ -152,7 +176,7 @@ body main .confirm__btn {
     flex-direction: column;
     padding-left: 0;
   }
-  body main .booking__profile--img {
+  body main .booking__profile--img-container {
     width: 100%;
   }
   body main .booking__delete-icon {

@@ -12,8 +12,8 @@
     />
     <link rel="stylesheet" href="/static/css/overall.css" />
     <link rel="stylesheet" href="/static/css/booking.css" />
-    <script defer src="/static/app/booking.js"></script>
-    <script defer src="/static/app/user.js"></script>
+    <script defer type="module" src="/static/app/booking.js"></script>
+    <script defer type="module" src="/static/app/user.js"></script>
   </head>
   <body>
     <header class="header">
@@ -25,45 +25,48 @@
         </div>
       </nav>
     </header>
+    <section class="welcome btn-bold">
+      <div class="welcome__container">
+        <span>您好，</span>
+        <span class="welcome__username"></span>
+        <span>，待預定的行程如下：</span>
+      </div>
+    </section>
+
+    <section class="empty">
+      <div class="empty__state body-med">目前沒有任何預定行程</div>
+    </section>
+
     <main>
       <section class="booking">
-        <div class="booking__welcome btn-bold">
-          您好，
-          <span>麥可</span>
-          ，帶預定的行程如下：
-        </div>
         <div class="booking__profile">
-          <div class="booking__profile--img">
-            <img src="./images/麥可.jpg" alt="景點圖片" />
+          <div class="booking__profile--img-container">
+            <img class="booking__profile--img" src="" alt="景點圖片" />
           </div>
           <div class="booking__profile--infor">
             <div class="booking__profile--title body-bold">
               台北一日遊：
-              <span class="infor__data--attraction-name">平安鐘</span>
+              <span class="infor__data--attraction-name"></span>
             </div>
             <div class="booking__profile--content">
               <span class="infor__subtitle body-bold">日期：</span>
-              <span class="infor__data infor__data--date body-med"
-                >2021-04-23</span
-              >
+              <span class="infor__data infor__data--date body-med"></span>
             </div>
             <div class="booking__profile--content">
               <span class="infor__subtitle body-bold">時間：</span>
-              <span class="infor__data infor__data--time body-med"
-                >早上9點到下午4點</span
-              >
+              <span class="infor__data infor__data--time body-med"></span>
             </div>
             <div class="booking__profile--content">
               <span class="infor__subtitle body-bold">費用：</span>
-              <span class="infor__data infor__data--cost body-med"
-                >新台幣2000元</span
-              >
+              <span class="infor__data body-med">
+                <span class="body-med infor__data">新台幣</span>
+                <span class="body-med infor__data--cost infor__data"></span>
+                <span class="body-med infor__data">元</span>
+              </span>
             </div>
             <div class="booking__profile--content">
               <span class="infor__subtitle body-bold">地點：</span>
-              <span class="infor__data infor__data--address body-med"
-                >台北市大安區之類的</span
-              >
+              <span class="infor__data infor__data--address body-med"></span>
             </div>
             <img
               src="/static/images/delete.png"
@@ -86,6 +89,7 @@
               id="name"
               class="contact__input--name body-med"
               placeholder="Yakko"
+              required
             />
           </div>
 
@@ -98,6 +102,7 @@
               id="email"
               class="contact__input--email body-med"
               placeholder="wehelp@pada-x.com"
+              required
             />
           </div>
 
@@ -109,7 +114,7 @@
               type="tel"
               id="phone"
               class="contact__input--phone body-med"
-              placeholder="0912345678"
+              required
             />
           </div>
           <div class="contact__notice body-bold">
@@ -128,6 +133,7 @@
               id="card-number"
               class="payment__input--car-number body-med"
               placeholder="**** **** **** ****"
+              required
             />
           </div>
 
@@ -140,6 +146,7 @@
               id="card-expire"
               class="payment__input--expire body-med"
               placeholder="MM / YY"
+              required
             />
           </div>
 
@@ -152,15 +159,16 @@
               id="card-CVV"
               class="payment__input--CVV body-med"
               placeholder="CVV"
+              required
             />
           </div>
         </section>
         <div class="separator"></div>
         <section class="confirm">
-          <div class="confirm__total-price body-bold">
-            總價：新台幣&nbsp
-            <span>2000</span>
-            &nbsp元
+          <div class="confirm__total body-bold">
+            <span>總價：新台幣&nbsp</span>
+            <span class="confirm__total--cost"></span>
+            <span>&nbsp元</span>
           </div>
           <button class="confirm__btn btn-reg">確認訂購並付款</button>
         </section>

@@ -46,12 +46,6 @@ leftBtn.addEventListener("click", (e) => {
 
 // --------------------mrt search as keyword--------------------
 searchKeywordByMRT();
-// --------------------refresh--------------------
-
-let webTilte = document.querySelector(".header__title");
-webTilte.addEventListener("click", (e) => {
-  location.reload();
-});
 
 // --------------------function part--------------------
 

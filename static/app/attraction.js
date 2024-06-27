@@ -1,3 +1,4 @@
+import { user, popUp } from "./user.js";
 const href = location.href;
 const pattern = /^http:.+\/attraction\/(\d+)$/;
 const attractionID = href.match(pattern)[1];
@@ -14,38 +15,21 @@ renderAttraction(attractionID).then((data) => {
     });
   });
   // --------------------update showing image when click arrow button--------------------
-  let rightBtn = document.querySelector("img.profile__arrow-btn--right");
-  rightBtn.addEventListener("click", (e) => {
-    let newImgID;
-    if (showingImgID == data.images.length - 1) {
-      newImgID = 0;
-    } else {
-      newImgID = Number(showingImgID) + 1;
-    }
 
-    renderNewImg(newImgID);
-    let circle = document.getElementById(showingImgID);
-    circle.checked = true;
+  let arrowBtns = document.querySelectorAll(".profile__arrow-btn");
+  arrowBtns.forEach((btn) => {
+    btn.addEventListener("click", (e) => {
+      let newImgID;
+      if (btn.id === "right") {
+        newImgID = (showingImgID + 1) % data.images.length;
+      } else {
+        newImgID = (showingImgID + data.images.length - 1) % data.images.length;
+      }
+      renderNewImg(newImgID);
+      let circle = document.getElementById(showingImgID);
+      circle.checked = true;
+    });
   });
-  let leftBtn = document.querySelector("img.profile__arrow-btn--left");
-  leftBtn.addEventListener("click", (e) => {
-    let newImgID;
-    if (showingImgID == 0) {
-      newImgID = data.images.length - 1;
-    } else {
-      newImgID = Number(showingImgID) - 1;
-    }
-    renderNewImg(newImgID);
-    let circle = document.getElementById(showingImgID);
-    circle.checked = true;
-  });
-});
-
-// --------------------redirect to home page--------------------
-
-let webTilte = document.querySelector(".header__title");
-webTilte.addEventListener("click", (e) => {
-  location.href = "/";
 });
 
 // --------------------change price--------------------
@@ -76,6 +60,8 @@ bookingBtn.addEventListener("click", (e) => {
     let formTag = document.querySelector(".profile__content--form");
     formTag.style.height = "322px";
     dateAlert.style.display = "block";
+  } else if (!user.isLogin) {
+    popUp.show();
   } else {
     let bookingData = {
       attractionId: Number(attractionID),
@@ -83,17 +69,17 @@ bookingBtn.addEventListener("click", (e) => {
       time: time,
       price: price,
     };
-
     sendBookingData(bookingData);
+    location.href = "/booking";
   }
 });
 // --------------------function part--------------------
 
 async function renderAttraction(attractionID) {
   // fetch data
-  url = "/api/attraction/" + attractionID;
-  let response = await fetch(url, { method: "GET" });
-  let data = await response.json();
+  const url = "/api/attraction/" + attractionID;
+  const response = await fetch(url, { method: "GET" });
+  const data = await response.json();
   checkAttractionData(data);
 
   // 渲染主要頁面
@@ -176,6 +162,7 @@ async function sendBookingData(bookingData) {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
+      Authorization: "Bearer " + localStorage.getItem("user_token"),
     },
     body: JSON.stringify(bookingData),
   });
@@ -183,3 +170,20 @@ async function sendBookingData(bookingData) {
   console.log(result);
   return result;
 }
+
+// 避免選到之前的日期
+(function () {
+  const fulldate = new Date();
+  const year = fulldate.getFullYear();
+  const month =
+    fulldate.getMonth() + 1 < 10
+      ? "0" + (fulldate.getMonth() + 1)
+      : fulldate.getMonth() + 1;
+  const date =
+    fulldate.getDate() + 1 < 10
+      ? "0" + (fulldate.getDate() + 1)
+      : fulldate.getDate() + 1;
+  document
+    .querySelector("input#date")
+    .setAttribute("min", `${year}-${month}-${date}`);
+})();
