@@ -13,7 +13,7 @@ class OrderModel:
             INSERT INTO purchase (id, prime, attraction_id, price, date, time, name, email, phone, paid)
             VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
           """
-          val = (order_number, data.prime, data.order.trip.attraction.id, data.order.price, data.order.trip.date, data.order.trip.time, data.order.contact.name, data.order.contact.email,  data.order.contact.phone, 0)
+          val = (order_number, data.prime, data.order.trip.attraction.id, data.order.price, str(data.order.trip.date), data.order.trip.time, data.order.contact.name, data.order.contact.email,  data.order.contact.phone, 0)
           result = Database.create(sql, val)
           if result>0:
                print ("成功新增一筆未付款訂單")
