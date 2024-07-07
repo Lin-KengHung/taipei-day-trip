@@ -10,6 +10,7 @@ router = APIRouter(
 )
 
 
+
 @router.get("/attractions" , summary="取得景點資料列表", response_model=AttractionListOut, description="取得不同分頁的旅遊景點列表資料，也可以根據標題關鍵字、或捷運站名稱篩選", tags=["Attraction"])
 async def get_attraction_data_list(page: int = Query(..., ge=0, description="要取得的分頁，每頁 12 筆資料"), keyword: str  =  Query(default="", description="用來完全比對捷運站名稱、或模糊比對景點名稱的關鍵字，沒有給定則不做篩選")):
     result = AttractionModel.get_attraction_data_list(page, keyword)

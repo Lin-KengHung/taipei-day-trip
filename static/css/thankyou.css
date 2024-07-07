@@ -1,0 +1,20 @@
+.order {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 40px;
+  margin-bottom: 40px;
+  gap: 20px;
+  color: #666666;
+}
+.order__error {
+  display: none;
+  color: red;
+}
+.order__note {
+  margin-top: 30px;
+  font-size: 18px;
+}
+.order__number {
+  margin-bottom: 20px;
+}/*# sourceMappingURL=thankyou.css.map */

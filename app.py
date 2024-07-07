@@ -1,6 +1,6 @@
 from fastapi import *
 from fastapi.responses import FileResponse, JSONResponse
-from router import attraction, user, booking
+from router import attraction, user, booking, order
 from model.share import Error
 from model.user import CustomizeRaise
 from fastapi.staticfiles import StaticFiles
@@ -16,6 +16,8 @@ app = FastAPI(
 app.include_router(attraction.router)
 app.include_router(user.router)
 app.include_router(booking.router)
+app.include_router(booking.router)
+app.include_router(order.router)
 app.mount("/static", StaticFiles(directory="static"), name="static")
 
 # @app.middleware("http")

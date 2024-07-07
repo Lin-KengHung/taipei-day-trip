@@ -1,0 +1,22 @@
+.order {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 40px;
+  margin-bottom: 40px;
+  gap: 20px;
+  color: #666666;
+  &__result {
+  }
+  &__error {
+    display: none;
+    color: red;
+  }
+  &__note {
+    margin-top: 30px;
+    font-size: 18px;
+  }
+  &__number {
+    margin-bottom: 20px;
+  }
+}
