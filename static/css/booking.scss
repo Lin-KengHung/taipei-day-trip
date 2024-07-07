@@ -39,7 +39,7 @@ body {
     flex-direction: column;
     align-items: center;
     padding: 0 10px;
-    visibility: hidden;
+    // visibility: hidden;
     .booking {
       width: 100%;
       max-width: 1000px;
@@ -146,14 +146,18 @@ body {
         margin-bottom: 5px;
       }
       &__input {
+        display: flex;
+        align-items: center;
         &--subtitle {
           color: $SecondaryColor;
           font-weight: 400;
         }
-        input {
+        div.tpfield {
+          width: 200px;
+          height: 38px;
+          padding: 10px;
           border: 1px solid #e8e8e8;
           border-radius: 5px;
-          padding: 10px;
         }
       }
     }
@@ -168,13 +172,24 @@ body {
       &__total {
         line-height: 20px;
         color: $SecondaryColor;
+        margin-bottom: 22px;
       }
       &__btn {
         width: 173px;
         height: 36px;
-        margin: 22px 0;
+        margin-bottom: 22px;
         background-color: #448899;
         color: white;
+        padding: 10px 20px;
+        border-radius: 5px;
+      }
+      &__error {
+        display: none;
+        width: 173px;
+        line-height: 10px;
+        margin-bottom: 11px;
+        background-color: #ffbd9b;
+        color: black;
         padding: 10px 20px;
         border-radius: 5px;
       }

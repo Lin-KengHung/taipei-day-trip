@@ -33,7 +33,6 @@ body main {
   flex-direction: column;
   align-items: center;
   padding: 0 10px;
-  visibility: hidden;
 }
 body main .booking {
   width: 100%;
@@ -139,14 +138,20 @@ body main .payment__title {
   color: #666666;
   margin-bottom: 5px;
 }
+body main .payment__input {
+  display: flex;
+  align-items: center;
+}
 body main .payment__input--subtitle {
   color: #666666;
   font-weight: 400;
 }
-body main .payment__input input {
+body main .payment__input div.tpfield {
+  width: 200px;
+  height: 38px;
+  padding: 10px;
   border: 1px solid #e8e8e8;
   border-radius: 5px;
-  padding: 10px;
 }
 body main .confirm {
   width: 100%;
@@ -160,13 +165,24 @@ body main .confirm {
 body main .confirm__total {
   line-height: 20px;
   color: #666666;
+  margin-bottom: 22px;
 }
 body main .confirm__btn {
   width: 173px;
   height: 36px;
-  margin: 22px 0;
+  margin-bottom: 22px;
   background-color: #448899;
   color: white;
+  padding: 10px 20px;
+  border-radius: 5px;
+}
+body main .confirm__error {
+  display: none;
+  width: 173px;
+  line-height: 10px;
+  margin-bottom: 11px;
+  background-color: #ffbd9b;
+  color: black;
   padding: 10px 20px;
   border-radius: 5px;
 }

@@ -12,6 +12,7 @@
     />
     <link rel="stylesheet" href="/static/css/overall.css" />
     <link rel="stylesheet" href="/static/css/booking.css" />
+    <script defer src="https://js.tappaysdk.com/sdk/tpdirect/v5.18.0"></script>
     <script defer type="module" src="/static/app/booking.js"></script>
     <script defer type="module" src="/static/app/user.js"></script>
   </head>
@@ -127,40 +128,25 @@
           <div class="payment__input">
             <label for="card-number" class="payment__input--subtitle body-med"
               >卡片號碼：</label
-            ><!--
-            --><input
-              type="text"
+            >
+            <div
+              class="tpfield payment__input--car-number body-med"
               id="card-number"
-              class="payment__input--car-number body-med"
-              placeholder="**** **** **** ****"
-              required
-            />
+            ></div>
           </div>
 
           <div class="payment__input">
             <label for="card-expire" class="payment__input--subtitle body-med"
               >過期時間：</label
-            ><!--
-            --><input
-              type="text"
-              id="card-expire"
-              class="payment__input--expire body-med"
-              placeholder="MM / YY"
-              required
-            />
+            >
+            <div class="tpfield body-med" id="card-expiration-date"></div>
           </div>
 
           <div class="payment__input">
             <label for="card-CVV" class="payment__input--subtitle body-med"
               >驗證密碼：</label
-            ><!--
-            --><input
-              type="text"
-              id="card-CVV"
-              class="payment__input--CVV body-med"
-              placeholder="CVV"
-              required
-            />
+            >
+            <div class="tpfield body-med" id="card-ccv"></div>
           </div>
         </section>
         <div class="separator"></div>
@@ -170,6 +156,7 @@
             <span class="confirm__total--cost"></span>
             <span>&nbsp元</span>
           </div>
+          <div class="confirm__error">測試</div>
           <button class="confirm__btn btn-reg">確認訂購並付款</button>
         </section>
       </form>
