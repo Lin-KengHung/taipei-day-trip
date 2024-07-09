@@ -1,8 +1,8 @@
 from fastapi import *
 from fastapi.responses import FileResponse, JSONResponse
 from router import attraction, user, booking, order
-from model.share import Error
-from model.user import CustomizeRaise
+from view.share import Error
+from view.user_view import CustomizeRaise
 from fastapi.staticfiles import StaticFiles
 from fastapi.exceptions import RequestValidationError
 
@@ -20,20 +20,23 @@ app.include_router(booking.router)
 app.include_router(order.router)
 app.mount("/static", StaticFiles(directory="static"), name="static")
 
-# @app.middleware("http")
-# async def ServerError(request: Request, call_next):
-# 	try:
-# 		response = await call_next(request)
-# 		return response
-# 	except Exception as e:
-# 		print(e)
-# 		return JSONResponse(status_code=500,content=Error(message="伺服器內部錯誤").model_dump())
 
+## 500 error raise
+@app.middleware("http")
+async def ServerError(request: Request, call_next):
+	try:
+		response = await call_next(request)
+		return response
+	except Exception as e:
+		print(e)
+		return JSONResponse(status_code=500,content=Error(message="伺服器內部錯誤").model_dump())
 
+## 403 customize error raise 
 @app.exception_handler(CustomizeRaise)
 async def error_raise(requset: Request, exc: CustomizeRaise):
 	return JSONResponse(status_code=exc.status_code, content=Error(message=exc.message).model_dump())
 
+## validation error 
 @app.exception_handler(RequestValidationError)
 async def validation_exception_handler(request: Request, exc: RequestValidationError):
 	error = exc.errors()[0]

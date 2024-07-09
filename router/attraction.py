@@ -1,7 +1,7 @@
 from fastapi import *
 from fastapi.responses import JSONResponse
-from model.attraction import AttractionModel, AttractionListOut, AttractionSingleOut, MrtsOut
-from model.share import Error
+from model.attraction_model import AttractionModel, AttractionListOut, AttractionSingleOut, MrtsOut
+from view.share import Error
 
 
 

@@ -1,6 +1,6 @@
 from dbconfig import Database
 from view.order_view import OrderInput, render_order_out, OrderOut
-from model.share import Error
+from view.share import Error
 import requests
 import os
 from dotenv import load_dotenv
