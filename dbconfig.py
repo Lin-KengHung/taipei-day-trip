@@ -9,7 +9,7 @@ load_dotenv()
 
 class Database:
     mydb = {
-        "host" : "localhost",
+        "host" : "db",
         "user" : "root",
         "password" : os.getenv("PASSWORD"),
         "database" : "taipei_day_trip"
