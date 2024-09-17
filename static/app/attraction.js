@@ -1,6 +1,6 @@
 import { user, popUp } from "./user.js";
 const href = location.href;
-const pattern = /^http:.+\/attraction\/(\d+)$/;
+const pattern = /^http.+\/attraction\/(\d+)$/;
 const attractionID = href.match(pattern)[1];
 let time = "morning";
 let price = 2000;
