@@ -1,5 +1,5 @@
 from pydantic import BaseModel, EmailStr
-from model.booking import Attraction
+from model.booking_model import Attraction
 from datetime import date
 
 class Contact(BaseModel):

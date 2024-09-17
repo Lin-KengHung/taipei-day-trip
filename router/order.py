@@ -2,11 +2,11 @@ from fastapi import *
 from fastapi.responses import JSONResponse
 import uuid
 
-from model.user import JWTBearer
-from model.order import OrderModel
+from model.user_model import JWTBearer
+from model.order_model import OrderModel
 from view.order_view import PaymentOut, OrderInput, OrderOut, render_payment_out
-from model.booking import BookingModel
-from model.share import Error
+from model.booking_model import BookingModel
+from view.share import Error
 
 router = APIRouter(
      prefix="/api", 

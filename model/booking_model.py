@@ -1,20 +1,7 @@
-from datetime import datetime, date
-from pydantic import BaseModel
-from model.share import Error
 from dbconfig import Database
-
-class Attraction(BaseModel):
-    id : int
-    name : str
-    address : str
-    image : str
-class Booking(BaseModel):
-    attraction: Attraction
-    date: date
-    time: str
-    price: int
-class BookingOut(BaseModel):
-    data: Booking
+from datetime import datetime, date
+from view.share import Error
+from view.booking_view import Attraction, Booking, BookingOut
 
 
 class BookingModel:

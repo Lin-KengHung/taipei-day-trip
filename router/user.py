@@ -1,9 +1,9 @@
 from fastapi import *
-from pydantic import BaseModel, field_validator
 from fastapi.responses import JSONResponse
-import re
-from model.user import UserModel, JWTBearer, Token, User, UserOut
-from model.share import Error, Success
+
+from model.user_model import UserModel, JWTBearer
+from view.user_view import Token, User, UserOut, UserSignInInput, UserSignUpInput
+from view.share import Error, Success
 
 
 router = APIRouter(
@@ -12,22 +12,6 @@ router = APIRouter(
 )
 security = JWTBearer()
 
-# ---------- Data verification schema ----------
-class UserSignUpInput(BaseModel):
-    name: str
-    email: str
-    password: str
-
-    @field_validator("email")
-    def email_match(cls, v: str):
-        email_pattern = r"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
-        if not re.match(email_pattern, v):
-            raise ValueError("Email格式不正確")
-        return v
-
-class UserSignInInput(BaseModel):
-    email: str
-    password: str
 
 # ---------- End point ----------
 

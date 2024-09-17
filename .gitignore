@@ -140,7 +140,8 @@ cython_debug/
 # macOS
 .DS_Store
 
-# script
+# other
 script
 test.py
 .vscode/
+ERM.png
