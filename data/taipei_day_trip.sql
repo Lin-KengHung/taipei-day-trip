@@ -74,7 +74,7 @@ CREATE TABLE `booking` (
   KEY `attraction_id` (`attraction_id`),
   CONSTRAINT `booking_ibfk_1` FOREIGN KEY (`attraction_id`) REFERENCES `attraction` (`id`),
   CONSTRAINT `booking_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=60 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=61 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -83,7 +83,7 @@ CREATE TABLE `booking` (
 
 LOCK TABLES `booking` WRITE;
 /*!40000 ALTER TABLE `booking` DISABLE KEYS */;
-INSERT INTO `booking` VALUES (18,4,29,'2024-06-27','afternoon','2500','2024-06-26 13:48:31'),(30,22,30,'2024-06-29','afternoon','2500','2024-06-26 16:10:42'),(56,2,31,'2024-07-11','afternoon','2500','2024-07-09 12:23:11');
+INSERT INTO `booking` VALUES (18,4,29,'2024-06-27','afternoon','2500','2024-06-26 13:48:31'),(30,22,30,'2024-06-29','afternoon','2500','2024-06-26 16:10:42'),(56,2,31,'2024-07-11','afternoon','2500','2024-07-09 12:23:11'),(60,2,6,'2024-09-18','afternoon','2500','2024-09-16 20:45:08');
 /*!40000 ALTER TABLE `booking` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -217,4 +217,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-07-09 13:25:08
+-- Dump completed on 2024-09-17 14:48:33
