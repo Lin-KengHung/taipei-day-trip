@@ -1,32 +1,11 @@
 version: "3.8"
 
 services:
-  web:
-    build: .
+  app:
+    build:
+      context: .
+    container_name: fastapi_app
     ports:
       - "8000:8000"
-    volumes:
-      - .:/app
-    depends_on:
-      db:
-        condition: service_healthy
-
-  db:
-    image: mysql:8.0
-    restart: always
-    environment:
-      MYSQL_ROOT_PASSWORD: ${PASSWORD}
-      MYSQL_DATABASE: taipei_day_trip
-
-    volumes:
-      - mysql_data:/var/lib/mysql
-      - ./data:/docker-entrypoint-initdb.d
-    healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "--silent"]
-      interval: 10s
-      timeout: 5s
-      retries: 3
-      start_period: 30s
-
-volumes:
-  mysql_data:
+    env_file:
+      - .env

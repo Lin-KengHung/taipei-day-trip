@@ -5,14 +5,20 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
+DATABASE_HOST = os.getenv('DATABASE_HOST')
+# DATABASE_HOST = "localhost"
+DATABASE_USER = os.getenv('DATABASE_USER')
+DATABASE_PASSWORD = os.getenv('DATABASE_PASSWORD')
+DATABASE_NAME = os.getenv('DATABASE_NAME')
 
+print(f"Host: {DATABASE_HOST}, User: {DATABASE_USER}")
 
 class Database:
     mydb = {
-        "host" : "db",
-        "user" : "root",
-        "password" : os.getenv("PASSWORD"),
-        "database" : "taipei_day_trip"
+        "host": DATABASE_HOST,
+        "user": DATABASE_USER,
+        "password": DATABASE_PASSWORD,
+        "database": DATABASE_NAME
     }
     connection_pool = mysql.connector.pooling.MySQLConnectionPool(pool_name="my_pool", pool_size=15, **mydb)
     
