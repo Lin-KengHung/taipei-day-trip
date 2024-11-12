@@ -5,6 +5,7 @@ from view.share import Error
 from view.user_view import CustomizeRaise
 from fastapi.staticfiles import StaticFiles
 from fastapi.exceptions import RequestValidationError
+from db.dbconfig import init_db
 
 
 app = FastAPI(
@@ -12,16 +13,15 @@ app = FastAPI(
     version="1.0.0",
     summary="台北一日遊網站 API 規格：網站後端程式必須支援這個 API 的規格，網站前端則根據 API 和後端互動。",
 )
-
+init_db()
 app.include_router(attraction.router)
 app.include_router(user.router)
-app.include_router(booking.router)
 app.include_router(booking.router)
 app.include_router(order.router)
 app.mount("/static", StaticFiles(directory="static"), name="static")
 
 
-## 500 error raise
+# 500 error raise
 @app.middleware("http")
 async def ServerError(request: Request, call_next):
 	try:
@@ -36,7 +36,7 @@ async def ServerError(request: Request, call_next):
 async def error_raise(requset: Request, exc: CustomizeRaise):
 	return JSONResponse(status_code=exc.status_code, content=Error(message=exc.message).model_dump())
 
-## validation error 
+# validation error 
 @app.exception_handler(RequestValidationError)
 async def validation_exception_handler(request: Request, exc: RequestValidationError):
 	error = exc.errors()[0]

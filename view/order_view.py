@@ -1,7 +1,11 @@
 from pydantic import BaseModel, EmailStr
-from model.booking_model import Attraction
 from datetime import date
 
+class Attraction(BaseModel):
+    id : int
+    name : str
+    address : str
+    image : str
 class Contact(BaseModel):
      name : str
      email : EmailStr

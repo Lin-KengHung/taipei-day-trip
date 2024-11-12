@@ -1,56 +1,31 @@
-from dbconfig import Database
-from view.share import Error
-from view.attraction_view import Attraction, AttractionListOut, AttractionSingleOut, MrtsOut
-import json
+from sqlalchemy import Column, Integer, String, Text, Float, ForeignKey
+from sqlalchemy.orm import relationship
+from db.base import Base
 
+class Attraction(Base):
+    __tablename__ = "attraction"
 
-class AttractionModel:
+    id = Column(Integer, primary_key=True, index=True)
+    name = Column(String(255), nullable=False)
+    category = Column(String(255), nullable=False)
+    description = Column(Text, nullable=False)
+    address = Column(Text, nullable=False)
+    transport = Column(Text, nullable=False)
+    mrt = Column(String(255), nullable=True)
+    lat = Column(Float, nullable=False)
+    lng = Column(Float, nullable=False)
 
-     def get_attraction_data_list(page: int, keyword: str ="") -> AttractionListOut:
-        
-        ## 資料庫搜尋
-        keyword = '%' + keyword + '%'
-        sql = "SELECT a.*, JSON_ARRAYAGG(i.url) AS images FROM attraction a LEFT JOIN image i ON a.id = i.attraction_id WHERE name LIKE %s or mrt LIKE %s GROUP BY a.id LIMIT %s, %s;"
-        val = (keyword, keyword, page * 12, 13)
-        attractions_list = Database.read_all(sql, val)
+    images = relationship("Image", back_populates="attraction")
+    bookings = relationship("Booking", back_populates="attraction")
+    purchases = relationship("Purchase", back_populates="attraction")
 
-        ## 資料格式處裡
-        for attraction in attractions_list:
-             attraction["images"] = json.loads(attraction["images"])
-             attraction = Attraction(**attraction)
-        
-        ## 判斷有沒有下一頁
-        if (len(attractions_list) == 13):
-             nextPage = page + 1
-             attractions_list.pop()
-        else:
-             nextPage = None
-
-        return AttractionListOut(nextPage=nextPage, data=attractions_list)
     
-     def get_attraction_data_by_id(id) -> AttractionSingleOut | Error:
 
-        ## 資料搜尋
-        sql = "SELECT a.*, JSON_ARRAYAGG(i.url) AS images FROM attraction a LEFT JOIN image i ON a.id = i.attraction_id WHERE a.id = %s GROUP BY a.id"
-        val = (id,)
-        attraction = Database.read_one(sql, val)
+class Image(Base):
+    __tablename__ = "image"
 
-        ## 錯誤ID狀況
-        if not attraction:
-             return Error(message="景點編號不正確")
-        
-        ## 資料處裡
-        attraction["images"] = json.loads(attraction["images"])
+    id = Column(Integer, primary_key=True, index=True)
+    url = Column(Text, nullable=False)
+    attraction_id = Column(Integer, ForeignKey("attraction.id"), nullable=False)
 
-        return AttractionSingleOut(data=Attraction(**attraction))
-
-     def get_mrts_list() -> MrtsOut:
-
-          # 查詢資料庫
-          sql = "SELECT mrt FROM attraction WHERE mrt IS NOT NULL GROUP BY mrt ORDER BY count(*) DESC"
-          raw_mrt_list = Database.read_all(sql)
-
-          # 資料格式處裡
-          mrt_list = list(map(lambda x: x["mrt"], raw_mrt_list))
-
-          return MrtsOut(data=mrt_list)
+    attraction = relationship("Attraction", back_populates="images")

@@ -14,6 +14,7 @@ async function init() {
     }
     const data = await response.json();
     if (data.error) {
+      console.log("此人沒有訂單");
       renderNoBooking();
     } else {
       renderMain(data.data);
