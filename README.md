@@ -17,8 +17,8 @@
 + 驗證密碼：123
 
 ## 版本分支
-Main: FastAPI + MySQL connector + MySQL (deployed )
-Other branch: FastAPI + SQLAlchemy ORM + PostgreSQL 
++ **Main**: FastAPI + MySQL connector + MySQL (deployed)
++ **Other branch**: FastAPI + SQLAlchemy ORM + PostgreSQL 
 
 ## 功能
 + 滾輪往下滑，可以閱覽所有景點資訊(12筆資料為1頁)，也可以用關鍵字搜尋景點標題
