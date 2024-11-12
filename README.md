@@ -16,6 +16,10 @@
 + 過期時間：12/24 （有效期間內即可）
 + 驗證密碼：123
 
+## 版本分支
+Main: FastAPI + MySQL connector + MySQL (deployed )
+Other branch: FastAPI + SQLAlchemy ORM + PostgreSQL 
+
 ## 功能
 + 滾輪往下滑，可以閱覽所有景點資訊(12筆資料為1頁)，也可以用關鍵字搜尋景點標題
 ![螢幕擷取畫面 2024-09-17 165058](https://github.com/user-attachments/assets/c2172f18-8045-477e-bf6f-c627154bc35a)
